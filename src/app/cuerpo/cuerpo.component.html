@@ -1,0 +1,63 @@
+<detalle-historia *ngIf="historiaSeleccionada" [historia]= "historiaSeleccionada"></detalle-historia>
+<!-- Content Row -->
+<div class="row">
+
+  <h3 class="text-center col-md-6 col-xl-12 font-weight-bolder">BUSQUEDA</h3>
+  <h6 class="text-center col-md-6 col-xl-12">Paciente</h6>
+ 
+  <form #CuerpoForm="ngForm" class="col-md-10 col-xl-12  d-flex justify-content-center">
+
+    <div class="form-group row">
+                <div class="text-center col-md-12">
+                    <mat-form-field>
+                        <input type="text" placeholder="Añadir" aria-label="Historias" matInput
+                            [formControl]="autocompleteControl" [matAutocomplete]="auto">
+                        <!--displayWith, atributo que permite ejecutar un metodo que mostrara el nombre del producto
+                            que seleccionamos, en el autocomplete. Ademas se define un evento que va llamar a un metodo para manejar
+                        el producto seleccionado.  $event, contiene el producto seleccionado-->
+                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="mostrarNombre"
+                            (optionSelected)="seleccionarHistoria($event)">
+                            <!--| async, se utiliza porque estamos iterando un observable en ves de un arreglo-->
+                            <mat-option *ngFor="let historia of historiasFiltradas | async" [value]="historia">
+                                {{historia.his_ape_paterno}} {{historia.his_ape_materno}}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                    <!--autocompleteControl.invalid, si esque no se ha añadido ningun producto para crear items-->
+                    <div class="alert alert-danger" *ngIf="autocompleteControl.invalid && CuerpoForm.submitted">
+                        La historia no puede no tener items.
+                    </div>
+
+                    <table class="table table-striped table-hover table-md" *ngIf="cuerpo.items.length > 0">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Nombre</th>
+                                <th>Ape. Paterno</th>
+                                <th>Ape. Materno</th>
+                                <th>Dni</th>
+                                <th>Seguro</th>
+                                <th>Pais</th>
+                                <th >Asignar Cita</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of cuerpo.items">
+                                <td><button type="button" (click)="abrirModal(item)"
+                                        class="btn btn-success">{{item.his_codigo}}</button></td>
+                                <td>{{item.his_nombre}}</td>
+                                <td>{{item.his_ape_paterno | lowercase }}</td>
+                                <td>{{item.his_ape_materno | lowercase}}</td>
+                                <td>{{item.his_dni}}</td>
+                                <td>{{item.his_seguro}}</td>
+                                <td>{{item.pais.pais_nombre}}</td>
+                                <td ><button type="button" class="btn btn-success btn-sm" [routerLink]="['/cita-medica/form', item.his_codigo]">Crear Cita</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+  </form>
+
+</div>

@@ -1,0 +1,267 @@
+<div class="pcoded-content">
+  <div class="pcoded-inner-content">
+    <div class="main-body">
+      <div class="page-wrapper">
+
+        <div class="page-body">
+          <div class="row">
+            <!--start-->
+
+            <div class="card bg-dark text-white mx-auto" style="width: 50%">
+
+              <div class="card-header bg-primary">{{titulo}}</div>
+              <div class="card-body">
+
+                <form #historiaForm="ngForm" class="container">
+                  <div class="form-group row mb-1">
+                    <!--col-sm-2, del total de 12 columnas que exite va ocupar 2-->
+                    <label for="his_nombre" class="col-form-label-sm col-md-4 col-lg-4">Nombre</label>
+                    <div class="col-md-8 col-lg-8 pl-0">
+
+                      <!--#nombre, es una variable local, y a esa variable se le asignara un objeto ngModel, sera este
+          objeto quien contenga los mensajes de error-->
+                      <!--required minlength="4"-->
+                      <input type="text" class="form-control form-control-sm mb-0" [(ngModel)]="historia.his_nombre" name="his_nombre"
+                        #his_nombre="ngModel" required>
+
+                      <div class="alert alert-danger my-1 py-1"
+                        *ngIf="his_nombre.invalid && (his_nombre.dirty || his_nombre.touched)">
+                        <div *ngIf="his_nombre.errors.required">
+                          <!--aca se muestra el mensaje de error solo para el Required-->
+                          Nombre es requerido
+                        </div>
+                        <div *ngIf="his_nombre.errors.minlength">
+                          Nombre debe tener al menos 4 caracteres
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group row mb-1">
+                    <!--col-sm-2, del total de 12 columnas que exite va ocupar 2-->
+                    <label for="his_ape_paterno" class="col-form-label-sm col-sm-4">Apellido Paterno</label>
+                    <div class="col-md-8 pl-0">
+                      <!--required-->
+                      <input type="text" class="form-control form-control-sm mb-0" [(ngModel)]="historia.his_ape_paterno"
+                        name="his_ape_paterno" #his_ape_paterno="ngModel" required>
+                      <div class="alert alert-danger my-1 py-1"
+                        *ngIf="his_ape_paterno.invalid && (his_ape_paterno.dirty || his_ape_paterno.touched)">
+                        <div *ngIf="his_ape_paterno.errors.required">
+                          <!--aca se muestra el mensaje de error solo para el Required-->
+                          Apellido Paterno es requerido
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group row mb-1">
+                    <!--col-sm-2, del total de 12 columnas que exite va ocupar 2-->
+                    <label for="his_ape_materno" class="col-form-label-sm col-sm-4">Apellido Materno</label>
+                    <div class="col-sm-8 pl-0">
+                      <!--required-->
+                      <input type="text" class="form-control form-control-sm mb-0" [(ngModel)]="historia.his_ape_materno"
+                        name="his_ape_materno" #his_ape_materno="ngModel" required>
+                      <div class="alert alert-danger my-1 py-1"
+                        *ngIf="his_ape_materno.invalid && (his_ape_materno.dirty || his_ape_materno.touched)">
+                        <div *ngIf="his_ape_materno.errors.required">
+                          <!--aca se muestra el mensaje de error solo para el Required-->
+                          Apellido Materno es requerido
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group row mb-1">
+                    <label for="his_dni" class="col-form-label-sm col-sm-4">DNI</label>
+                    <div class="col-sm-8 pl-0">
+                      <input type="text" class="form-control form-control-sm mb-0" [(ngModel)]="historia.his_dni" name="his_dni"
+                        #his_dni="ngModel" required minlength="8" maxlength="8">
+                      <div class="alert alert-danger my-1 py-1"
+                        *ngIf="his_dni.invalid && (his_dni.dirty || his_dni.touched)">
+                        <div *ngIf="his_dni.errors.required">
+                          <!--aca se muestra el mensaje de error solo para el Required-->
+                          DNI es requerido
+                        </div>
+                        <div *ngIf="his_dni.errors.minlength">
+                          DNI debe tener al menos 8 caracteres
+                        </div>
+                        <div *ngIf="his_dni.errors.maxlength">
+                          DNI no debe tener más de 8 caracteres
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group row mb-1">
+                    <label for="his_direccion" class="col-form-label-sm col-md-4">Dirección</label>
+                    <div class="col-md-8 pl-0">
+                      <!--required-->
+                      <input type="text" class="form-control form-control-sm mb-0" [(ngModel)]="historia.his_direccion" name="his_direccion"
+                        #his_direccion="ngModel" required>
+                      <div class="alert alert-danger my-1 py-1"
+                        *ngIf="his_direccion.invalid && (his_direccion.dirty || his_direccion.touched)">
+                        <div *ngIf="his_direccion.errors.required">
+                          <!--aca se muestra el mensaje de error solo para el Required-->
+                          Dirección es requerido
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group row mb-1">
+                    <label for="his_direccion" class="col-form-label-sm col-md-4">Hora Prueba</label>
+                    <div class="col-md-8 pl-0">
+                      <!--required-->
+                   
+                      <input type="time" name="hora" min="18:00"
+                                 max="24:00" >
+                    
+                    </div>
+                  </div>
+
+                  <div class="form-group row mb-1" [class.has-error]="his_seguro.touched && his_seguro.invalid">
+                    <label for="his_seguro" class="col-form-label-sm col-sm-4">Seguro</label>
+                    <div class="col-sm-8 pl-0 form-control-sm mb-0">
+                      <!--required-->
+                      <mat-radio-group name="his_seguro" required #his_seguro="ngModel"
+                        [(ngModel)]="historia.his_seguro">
+                        <mat-radio-button class=" my-1 py-0" *ngFor="let seguro of seguros" name="his_seguro"
+                          [value]="seguro.valor" style="margin: 10px">
+                          {{seguro.muestraValor}}
+                        </mat-radio-button>
+                      </mat-radio-group>
+                      <div class="alert alert-danger my-1 py-1"
+                        *ngIf="his_seguro.invalid && (his_seguro.dirty || his_seguro.touched)">
+                        <div *ngIf="his_seguro.errors.required">
+                          <!--aca se muestra el mensaje de error solo para el Required-->
+                          Seguro es requerido
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group row mb-1" [class.has-error]="his_genero.touched && his_genero.invalid">
+                    <label for="his_genero" class="col-form-label-sm  col-sm-4">Género</label>
+                    <div class="col-sm-8 pl-0 form-control-sm">
+                      <!--required-->
+                      <mat-radio-group name="his_genero" required #his_genero="ngModel"
+                        [(ngModel)]="historia.his_genero">
+                        <mat-radio-button class="my-1 py-0" *ngFor="let genero of generos" name="his_genero"
+                          [value]="genero.valor" style="margin: 10px">
+                          {{genero.muestraValor}}
+                        </mat-radio-button>
+                      </mat-radio-group>
+                      <div class="alert alert-danger my-1 py-1"
+                        *ngIf="his_genero.invalid && (his_genero.dirty || his_genero.touched)">
+                        <div *ngIf="his_genero.errors.required">
+                          <!--aca se muestra el mensaje de error solo para el Required-->
+                          Selección de género es requerido
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+          
+
+                  <div class="form-group row mb-1">
+                    <label for="his_fec_nacimiento" class="col-form-label-sm col-md-4">Fecha Nacimiento</label>
+                    <div class="col-md-7 pl-0 mb-0">
+                      <!--cuando es form-control, por defecto el display es Block(por eso lo muestra en una linea mas abajo)-->
+                      <input [matDatepicker]="miDatepicker" class="form-control-sm"
+                        [(ngModel)]="historia.his_fec_nacimiento" name="his_fec_nacimiento" style="display:inline;">
+
+                    </div>
+                    <div class="col-md-1 pl-0 ">
+                      <!--el [For] va enlazar el calendario(<mat-datepicker #miDatepicker>),que a hacerle clic enlaza 
+                   al input-->
+                      <mat-datepicker-toggle [for]="miDatepicker" class="icon-fecha"></mat-datepicker-toggle>
+                      <!--#miDatepicker, se esta creando una variable de contexto de la vista que contiene una referencia
+              al componente matDatepicker y se le pasa al input-->
+                      <mat-datepicker #miDatepicker></mat-datepicker>
+                    </div>
+                  </div>
+
+                  <div class="form-group row mb-1">
+                    <!--col-sm-2, del total de 12 columnas que exite va ocupar 3-->
+                    <label for="his_gra_estudio" class="col-form-label-sm col-sm-4">Grado de estudio</label>
+                    <div class="col-sm-6 pl-0 mb-0">
+
+                      <select class="form-control-sm " [(ngModel)]="historia.his_gra_estudio" name="his_gra_estudio">
+                        <!--undefined, no esta definido, es como si fuera un null, pero en typescript se maneja como undefined-->
+                        <option [ngValue]="undefined">--- Seleccionar grado de estudio ---</option>
+                        <option *ngFor="let gEst of gEstudios" [ngValue]="gEst.valor">{{gEst.muestraValor}}</option>
+                      </select>
+
+                    </div>
+                  </div>
+
+                  <div class="form-group row mb-1">
+                    <!--col-sm-2, del total de 12 columnas que exite va ocupar 2-->
+                    <label for="pais" class="col-form-label-sm col-sm-4">Pais</label>
+                    <div class="col-sm-6 pl-0 mb-0">
+                      <select [compareWith]="compararPais" class="form-control-sm" [(ngModel)]="historia.pais" name="pais" >
+                        <!--undefined, no esta definido, es como si fuera un null, pero en typescript se maneja como undefined-->
+                        <option [ngValue]="undefined">--- Seleccionar Pais ---</option>
+                        <option *ngFor="let pais of paises" [ngValue]="pais">{{pais.pais_nombre}}</option>
+                      </select>
+
+                    </div>
+                  </div>
+
+                  <div *ngIf="editar" class="form-group row mb-1"
+                    [class.has-error]="his_estado.touched && his_estado.invalid">
+                    <label for="his_estado" class="control-label col-sm-4">Estado</label>
+                    <div class="col-sm-8 pl-0">
+                      <!--required-->
+                      <mat-radio-group name="his_estado" required #his_estado="ngModel"
+                        [(ngModel)]="historia.his_estado">
+                        <mat-radio-button class="my-1 py-0" *ngFor="let estado of estados" name="his_estado"
+                          [value]="estado.valor" style="margin: 10px">
+                          {{estado.muestraValor}}
+                        </mat-radio-button>
+                      </mat-radio-group>
+                      <div class="alert alert-danger my-0 py-1"
+                        *ngIf="his_estado.invalid && (his_estado.dirty || his_estado.touched)">
+                        <div *ngIf="his_estado.errors.required">
+                          <!--aca se muestra el mensaje de error solo para el Required-->
+                          Selección de estado es requerido
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group row mb-1">
+                    <div class="col-sm-6">
+                      <!--Este era para trabajar con ngSumbit, que se habia puesta en la etiqueta form
+            <button class="btn btn-primary" role="button">Crear</button>-->
+                      <!--ngIf, si el codigo dela Historia no existe se va mostrar el boton crear. else, sino
+          utlizaremos un template para colocar el boton actualizar; la etiqueta elseBlock para Crear el
+        template-->
+                      <!--trabajando validacion, teniendo como partida el ngFor (puesto en la etiqueta de form)
+            !historiaForm.form.valid, va retornar true o false; (pero  "!" lo negara)-->
+                      <button class="btn btn-primary" role="button" (click)='create()'
+                        *ngIf="!historia.his_codigo else elseBlock" [disabled]="!historiaForm.form.valid">Crear</button>
+                      <ng-template #elseBlock>
+                        <button class="btn btn-primary" role="button" (click)='update()'
+                          [disabled]="!historiaForm.form.valid">Actualizar</button>
+                      </ng-template>
+                    </div>
+                  </div>
+
+                </form>
+
+
+              </div>
+            </div>
+            <!--end-->
+
+          </div>
+        </div>
+
+        <div id="styleSelector">
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,158 @@
+<ul *ngIf="this.authService.isAuthenticated()" class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+  id="accordionSidebar">
+
+  <!-- Sidebar - Brand -->
+  <a class="sidebar-brand d-flex align-items-center justify-content-center" routerLink="/cuerpo">
+    <div class="sidebar-brand-icon rotate-n-15">
+      <i class="fas fa-laugh-wink"></i>
+    </div>
+    <div class="sidebar-brand-text mx-3">SC MÉDICA <sup>2</sup></div>
+  </a>
+
+  <!-- Divider -->
+  <hr class="sidebar-divider my-0">
+  <!-- Divider -->
+  <hr class="sidebar-divider" *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_TECNICO')">
+
+  <!-- Heading -->
+  <div class="sidebar-heading"  *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_TECNICO')">
+    CAJA
+  </div>
+
+  <!-- Nav Item - Pages Collapse Menu -->
+  <li class="nav-item" *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_TECNICO')">
+    <a class="nav-link pb-0" routerLink="/calendar">
+      <i class="fas fa-fw fa-table"></i>
+      <span>Programación</span>
+    </a>
+
+    <a class="nav-link collapsed pb-0" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
+      aria-controls="collapseTwo">
+      <i class="fas fa-fw fa-cog"></i>
+      <span>Cita médica</span>
+    </a>
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+      <div class="bg-white my-0 py-0 collapse-inner rounded">
+        <a class="collapse-item" href="#">Crear</a>
+        <a class="collapse-item" href="#">Consultar</a>
+      </div>
+    </div>
+  </li>
+
+  <!-- Divider -->
+  <hr class="sidebar-divider mt-3" *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_ENFERMERO') || authService.hasRole('ROLE_MEDICO') || authService.hasRole('ROLE_TECNICO')">
+
+  <!-- Heading -->
+  <div class="sidebar-heading"  *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_ENFERMERO') || authService.hasRole('ROLE_MEDICO')">
+    CONSULTORIO
+  </div>
+
+  <!-- Nav Item - Pages Collapse Menu -->
+  <li class="nav-item" *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_ENFERMERO') || authService.hasRole('ROLE_MEDICO')">
+    <a class="nav-link pb-0" href="#">
+      <i class="fas fa-fw fa-table"></i>
+      <span>Paciente citados</span>
+    </a>
+
+    <a class="nav-link" href="#">
+      <i class="fas fa-fw fa-table"></i>
+      <span>Diagnóstico</span>
+    </a>
+
+    <a class="nav-link pt-0" href="#">
+      <i class="fas fa-fw fa-table"></i>
+      <span>Programación</span>
+    </a>
+  </li>
+
+  <!-- Divider -->
+  <hr class="sidebar-divider" *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_ENFERMERO') || authService.hasRole('ROLE_MEDICO')">
+
+  <!-- Heading -->
+  <div class="sidebar-heading" *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_INFORMATICO')">
+    CONTROL DE HISTORIA
+  </div>
+  <li class="nav-item" *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_INFORMATICO')">
+    <a class="nav-link pb-0" href="#">
+      <i class="fas fa-fw fa-table"></i>
+      <span>Historia</span>
+    </a>
+  </li>
+
+  <!-- Divider -->
+  <hr class="sidebar-divider mt-2" *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_INFORMATICO')">
+
+  <!-- Heading -->
+  <div class="sidebar-heading" *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_INFORMATICO')">
+    ADMINISTRACION
+  </div>
+
+  <!-- Nav Item - Pages Collapse Menu -->
+  <li class="nav-item" *ngIf="authService.hasRole('ROLE_ADMIN')|| authService.hasRole('ROLE_INFORMATICO')">
+    <a class="nav-link collapsed pb-0" href="#" data-toggle="collapse" data-target="#collapsePages1" aria-expanded="true"
+      aria-controls="collapsePages1">
+      <i class="fas fa-fw fa-folder"></i>
+      <span>Paciente</span>
+    </a>
+    <div id="collapsePages1" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+      <div class="bg-white my-0 py-0 collapse-inner rounded">
+        <a class="collapse-item" routerLink="/historias/formulario">Nuevo</a>
+        <a class="collapse-item" routerLink="/historias">Control</a>
+
+      </div>
+    </div>
+  </li>
+
+  <li class="nav-item" *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_INFORMATICO')">
+    <a class="nav-link collapsed pb-0" href="#" data-toggle="collapse" data-target="#collapsePages2" aria-expanded="true"
+      aria-controls="collapsePages2">
+      <i class="fas fa-fw fa-folder"></i>
+      <span>Personal</span>
+    </a>
+    <div id="collapsePages2" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+      <div class="bg-white my-0 py-0 collapse-inner rounded">
+        <a class="collapse-item" routerLink="#">Nuevo</a>
+        <a class="collapse-item" routerLink="#">Control</a>
+
+      </div>
+    </div>
+  </li>
+
+  <li class="nav-item" *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_INFORMATICO')">
+    <a class="nav-link collapsed pb-0" href="#" data-toggle="collapse" data-target="#collapsePages3" aria-expanded="true"
+      aria-controls="collapsePages3">
+      <i class="fas fa-fw fa-folder"></i>
+      <span>Programación</span>
+    </a>
+    <div id="collapsePages3" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+      <div class="bg-white my-0 py-0 collapse-inner rounded">
+        <a class="collapse-item" routerLink="#">Nuevo</a>
+        <a class="collapse-item" routerLink="#">Control</a>
+      </div>
+    </div>
+  </li>
+
+  <li class="nav-item" *ngIf="authService.hasRole('ROLE_ADMIN')">
+    <a class="nav-link collapsed pb-0" href="#" data-toggle="collapse" data-target="#collapsePages4" aria-expanded="true"
+      aria-controls="collapsePages4">
+      <i class="fas fa-fw fa-folder"></i>
+      <span> Manten. Entidades</span>
+    </a>
+    <div id="collapsePages4" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+      <div class="bg-white my-0 py-0 collapse-inner rounded">
+        <a class="collapse-item" routerLink="#">Especialidad médica</a>
+        <a class="collapse-item" routerLink="#">Categoria personal</a>
+        <a class="collapse-item" routerLink="#">Rol Usuario</a>
+        <a class="collapse-item" routerLink="#">Consultorio</a>
+      </div>
+    </div>
+  </li>
+  <!-- Divider -->
+  <hr class="sidebar-divider d-none d-md-block" *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_INFORMATICO')">
+
+  <!-- Sidebar Toggler (Sidebar) -->
+  <div class="text-center d-none d-md-inline">
+    <button class="rounded-circle border-0" id="sidebarToggle"></button>
+  </div>
+
+</ul>

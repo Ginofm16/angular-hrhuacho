@@ -1,0 +1,49 @@
+<body>
+    <div class="container-fluid ">
+        <div class="container ">
+            <div class="row ">
+                <div class="col-sm-10 login-box">
+                    <div class="row">
+                        <div class="col-lg-8 col-md-7 log-det">
+                            <div class="small-logo">
+                                <i class="fab fa-asymmetrik"></i> Login
+                            </div>
+                            <h2 class="mb-5">{{titulo}}</h2>
+                           
+                            <div class="text-box-cont">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
+                                    </div>
+                                    <input [(ngModel)]="personal.username" type="text" class="form-control" placeholder="Username" aria-label="Username" name="username" 
+                                    id="username" aria-describedby="basic-addon1" autofocus required>
+                                </div>
+                                 <div class="input-group mb-5">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock"></i></span>
+                                    </div>
+                                    <input [(ngModel)]="personal.password" type="password" class="form-control" name="password"
+                                    id="password" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1" required>
+                                </div>
+                        
+                                <div class="input-group center mb-3">
+                                    <button (click)='login()' type="submit"  class="btn btn-success btn-round">SIGN IN</button>
+                                </div>    
+                            </div>
+                            
+
+
+                        </div>
+                        <div class="col-lg-4 col-md-5 box-de">
+                            <div class="ditk-inf">
+                                <h2 class="w-100">Hospital Regional de Huacho </h2>
+                                <p>Hola, bienvenido al Sistema de Atención en Consultorio Externo</p>
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
