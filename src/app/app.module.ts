@@ -42,6 +42,8 @@ import { CalendarComponent } from './calendar/calendar/calendar.component';
 import { ProgramacionComponent } from './programacion/programacion.component';
 import { ConsultorioComponent } from './consultorio/consultorio.component';
 import { CalendarService } from './calendar/calendar.service';
+import { FormprogramacionComponent } from './programacion/formulario/formprogramacion/formprogramacion.component';
+import { MantprogramacionComponent } from './programacion/mantenimiento/mantprogramacion/mantprogramacion.component';
 
 
 registerLocaleData(localeES, 'es');
@@ -56,7 +58,10 @@ const routes: Routes = [
   {path:'login', component: LoginComponent},
   {path:'cita-medica/form/:id', component: CitaMedicaComponent},
   {path:'calendar', component: CalendarComponent},
-  {path:'programacion', component: ProgramacionComponent}
+  {path:'programacion', component:ProgramacionComponent},
+  {path:'programacion/mantenimiento', component:MantprogramacionComponent},
+  {path:'programacion/formulario', component:FormprogramacionComponent},
+  {path:'programacion/formulario/:codigo', component:FormprogramacionComponent}
 ]
 
 @NgModule({
@@ -73,7 +78,9 @@ const routes: Routes = [
     CitaMedicaComponent,
     CalendarComponent,
     ProgramacionComponent,
-    ConsultorioComponent
+    ConsultorioComponent,
+    FormprogramacionComponent,
+    MantprogramacionComponent
   ],
   imports: [
     BrowserModule,

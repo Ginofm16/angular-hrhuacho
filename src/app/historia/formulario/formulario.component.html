@@ -119,6 +119,8 @@
                     </div>
                   </div>
 
+                  
+
                   <div class="form-group row mb-1" [class.has-error]="his_seguro.touched && his_seguro.invalid">
                     <label for="his_seguro" class="col-form-label-sm col-sm-4">Seguro</label>
                     <div class="col-sm-8 pl-0 form-control-sm mb-0">
@@ -162,22 +164,12 @@
                   </div>
 
           
-
+                  <!--FEcha-->
                   <div class="form-group row mb-1">
-                    <label for="his_fec_nacimiento" class="col-form-label-sm col-md-4">Fecha Nacimiento</label>
-                    <div class="col-md-7 pl-0 mb-0">
-                      <!--cuando es form-control, por defecto el display es Block(por eso lo muestra en una linea mas abajo)-->
-                      <input [matDatepicker]="miDatepicker" class="form-control-sm"
-                        [(ngModel)]="historia.his_fec_nacimiento" name="his_fec_nacimiento" style="display:inline;">
-
-                    </div>
-                    <div class="col-md-1 pl-0 ">
-                      <!--el [For] va enlazar el calendario(<mat-datepicker #miDatepicker>),que a hacerle clic enlaza 
-                   al input-->
-                      <mat-datepicker-toggle [for]="miDatepicker" class="icon-fecha"></mat-datepicker-toggle>
-                      <!--#miDatepicker, se esta creando una variable de contexto de la vista que contiene una referencia
-              al componente matDatepicker y se le pasa al input-->
-                      <mat-datepicker #miDatepicker></mat-datepicker>
+                    <label for="his_direccion" class="col-form-label-sm col-md-4">Fecha Prueba</label>
+                    <div class="col-md-8 pl-0">
+                      <!--required-->
+                      <input [(ngModel)]="historia.his_fec_nacimiento" name="his_fec_nacimiento" type="date" id="date" >
                     </div>
                   </div>
 

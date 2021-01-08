@@ -1,20 +1,10 @@
-<!--
-<div class="card bg-info">
-    <div class="card-body">
-        <select class="form-control-sm" name="calendar" [(ngModel)]="consultorioSeleccionado" name="consultorio">
-            <!- undefined, no esta definido, es como si fuera un null, pero en typescript se maneja como undefined ->
-            <option [ngValue]="undefined">--- Seleccionar consultorio ---</option>
-            <option *ngFor="let consultorio of consultorios" [ngValue]="consultorio">{{consultorio.con_nombre}}</option>
-        </select>
+
+    <div style="width: 75%;">
+    <full-calendar (dateClick)="handleDateClick($event)" defaultView="dayGridMonth"
+    [plugins]="calendarPlugins" 
+    [events]="calendarEvents" 
+    [locales]="locales"
+    [plugins]="calendarPlugins"  style="font-size: 0.85em; color: black;" class="font-weight-bold" >
+    </full-calendar>
     </div>
-</div>-->
-
-{{consultorio.con_codigo}}
-
-<div style="width: 80%; margin: auto; ">
-<full-calendar (dateClick)="handleDateClick($event)" defaultView="dayGridMonth"
-[plugins]="calendarPlugins" 
-[events]="calendarEvents" 
-[locales]="locales"
-[plugins]="calendarPlugins" class="text-dark font-weight-bold" style="font-size: 0.85em;" ></full-calendar>
-</div>
+    

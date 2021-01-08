@@ -14,6 +14,8 @@ import { Router } from '@angular/router';
 @Injectable()
 export class HistoriaService{
 
+    codCon:String;
+
 historias: Historia[];
 
     private urlEndPoint:string = 'http://localhost:8080/api/historias';
@@ -21,8 +23,8 @@ historias: Historia[];
     constructor(private http: HttpClient, private router: Router){}
 
     getHistorias(page: number): Observable<any>{
-
-        return this.http.get(this.urlEndPoint+'/page/'+page).pipe(
+        this.codCon  = "4";
+        return this.http.get(this.urlEndPoint+'/page/'+page+'/codigo/'+this.codCon).pipe(
 
             map((response:any) => {
                 this.historias = response.content as Historia[];
@@ -119,5 +121,5 @@ historias: Historia[];
             return throwError(e);
           })
         )
-      }
+    }
 }

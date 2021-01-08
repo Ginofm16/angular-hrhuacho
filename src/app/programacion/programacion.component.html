@@ -1,19 +1,19 @@
-<div class="card bg-info">
-    <div class="card-body">
-        <mat-form-field>
-            <mat-label>Consultorio</mat-label>
-            <mat-select [value]="consultorioSeleccionado" (selectionChange)="consultorioSeleccionado = $event.value" name="consultorio">
-              <mat-option *ngFor="let consultorio of consultorios" [value]="consultorio">
-                {{consultorio.con_nombre}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-    </div>
-</div>
-<br>
-<br>
-<app-calendar *ngIf="consultorioSeleccionado" [consultorio]="consultorioSeleccionado"></app-calendar>
 
-<!--<div *ngIf="consultorioSeleccionado">
-    {{consultorioSeleccionado.con_nombre}}
-</div>-->
+    <div class="row" >
+      <div class="col-3" style="margin-top: -10px;">
+        <mat-form-field>
+          <mat-label>Consultorio</mat-label>
+          <mat-select [value]="consultorioSeleccionado" (selectionChange)="consultorioSeleccionado = $event.value"
+            name="consultorio">
+            <mat-option *ngFor="let consultorio of consultorios" [value]="consultorio">
+              {{consultorio.con_nombre}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-3">
+        <button type="button" class="btn btn-danger" [routerLink]="['/programacion/mantenimiento']">Mantenimiento</button>
+      </div>
+    </div>
+
+<app-calendar *ngIf="consultorioSeleccionado" [consultorio]="consultorioSeleccionado"></app-calendar>
