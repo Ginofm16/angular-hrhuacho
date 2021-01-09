@@ -46,6 +46,8 @@ import { FormprogramacionComponent } from './programacion/formulario/formprogram
 import { MantprogramacionComponent } from './programacion/mantenimiento/mantprogramacion/mantprogramacion.component';
 
 
+import { DataTablesModule } from 'angular-datatables';
+
 registerLocaleData(localeES, 'es');
 
 const routes: Routes = [
@@ -62,6 +64,8 @@ const routes: Routes = [
   {path:'programacion/mantenimiento', component:MantprogramacionComponent},
   {path:'programacion/formulario', component:FormprogramacionComponent},
   {path:'programacion/formulario/:codigo', component:FormprogramacionComponent}
+
+
 ]
 
 @NgModule({
@@ -91,7 +95,8 @@ const routes: Routes = [
     MatButtonModule,
     MatRadioModule,
     ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatAutocompleteModule, MatSelectModule,
-    FullCalendarModule
+    FullCalendarModule,
+    DataTablesModule
   ],
   providers: [HistoriaService, CuerpoService,CalendarService, {provide: LOCALE_ID, useValue:'es'},
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },

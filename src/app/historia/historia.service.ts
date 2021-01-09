@@ -43,6 +43,17 @@ historias: Historia[];
         );
     }
 
+    getHistoriasIndex(): Observable<any>{
+        return this.http.get(this.urlEndPoint).pipe(
+
+            map((response:any) => {
+                this.historias = response.content as Historia[];
+
+                return response;
+            })
+        );
+    }
+
     getPaises(): Observable<Pais[]>{
 
         return this.http.get<Pais[]>(this.urlEndPoint+'/paises');

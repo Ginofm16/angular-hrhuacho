@@ -1,72 +1,65 @@
-<detalle-historia *ngIf="historiaSeleccionada" [historia]= "historiaSeleccionada"></detalle-historia>
-                        <!-- start -->
+<detalle-historia *ngIf="historiaSeleccionada" [historia]="historiaSeleccionada"></detalle-historia>
+<!-- start -->
+<div class="card border-primary">
 
-                        <div class="card border-primary">
+    <div class="card-body text-primary">
 
-                            <div class="card-body text-primary">
-                                <h5 class="card-title mb-4">LISTADO DE HISTORIAS</h5>
+        <h5 class="card-title mb-4">LISTADO DE HISTORIAS</h5>
 
-                                <!--colocar una condicion para mostrar los datos cuando vengan, y si esque no hay datos
+        <!--colocar una condicion para mostrar los datos cuando vengan, y si esque no hay datos
                             que se muestre un mensaje-->
-                                <div *ngIf="historias?.length==0" class="alert alert-info">
-                                    No hay registro en la base de datos!
-                                </div>
-                                <div class="table-responsive">
-                                <table class="table table-bordered table-striped table-sm" *ngIf="historias?.length>0">
-                                    <thead>
-                                        <tr>
-                                            <th *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_INFORMATICO') || authService.hasRole('ROLE_TECNICO')">Id</th>
-                                            <th>Nombre</th>
-                                            <th>Ape. Paterno</th>
-                                            <th>Ape. Materno</th>
-                                            <th>Dni</th>
-                                            <th>Dirección</th>
-                                            <th>Fecha Nac.</th>
-                                            <th>Seguro</th>
-                                            <th>Gra. Estudio</th>
-                                            <th>Pais</th>
-                                            <th *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_INFORMATICO')">Editar</th>
-                                            <th *ngIf="authService.hasRole('ROLE_ADMIN')">Eliminar</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr *ngFor="let historia of historias">
-                                            <td *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_INFORMATICO') || authService.hasRole('ROLE_TECNICO')"><button type="button" (click)="abrirModal(historia)"
-                                                    class="btn btn-success">{{historia.his_codigo}}</button></td>
-                                            <td>{{historia.his_nombre}}</td>
-                                            <!--OTRA FORMA(formato) de dar formato-->
-                                            <td>{{historia.his_ape_materno | lowercase }}</td>
-                                            <td>{{historia.his_ape_paterno}}</td>
-                                            <td>{{historia.his_dni}}</td>
-                                            <td>{{historia.his_direccion}}</td>
-                                            <td>{{historia.his_fec_nacimiento | date:'EEEE dd, MMMM yyyy':'UTC'}}</td>
-                                            <td>{{historia.his_seguro}}</td>
-                                            <td>{{historia.his_gra_estudio}}</td>
-                                            <td>{{historia.pais.pais_nombre}}</td>
-                                            <td *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_INFORMATICO')">
-                                                <!--routerLink, con dos argumentos, primero la ruta con el cual estar registrado
+        <div *ngIf="historias?.length==0" class="alert alert-info">
+            No hay registro en la base de datos!
+        </div>
+        <div class="table-responsive">
+        <table  datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+            <thead>
+                <tr>
+                    <th
+                        *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_INFORMATICO') || authService.hasRole('ROLE_TECNICO')">
+                        Id</th>
+                    <th>Nombre</th>
+                    <th>Ape. Paterno</th>
+                    <th>Ape. Materno</th>
+                    <th>Dni</th>
+                    <th>Fecha Nac.</th>
+                    <th>Seguro</th>
+                    <th>Pais</th>
+                    <th *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_INFORMATICO')">Editar</th>
+                    <th *ngIf="authService.hasRole('ROLE_ADMIN')">Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let historia of historiasIndex">
+                    <td
+                        *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_INFORMATICO') || authService.hasRole('ROLE_TECNICO')">
+                        <button type="button" (click)="abrirModal(historia)"
+                            class="btn btn-success">{{historia.his_codigo}}</button></td>
+                    <td>{{historia.his_nombre}}</td>
+                    <!--OTRA FORMA(formato) de dar formato-->
+                    <td>{{historia.his_ape_materno | lowercase }}</td>
+                    <td>{{historia.his_ape_paterno}}</td>
+                    <td>{{historia.his_dni}}</td>
+                    <td>{{historia.his_fec_nacimiento}}</td>
+                    <td>{{historia.his_seguro}}</td>
+                    <td>{{historia.pais.pais_nombre}}</td>
+                    <td *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_INFORMATICO')">
+                        <!--routerLink, con dos argumentos, primero la ruta con el cual estar registrado
                                       y segundo el id del cliente-->
-                                                <button type="button" name="editar" [routerLink]="['/historias/formulario', historia.his_codigo]"
-                                                    class="btn btn-primary">Editar</button>
-                                            </td>
-                                            <td *ngIf="authService.hasRole('ROLE_ADMIN')">
-                                                <!--va pasar el objeto de la fila actual-->
-                                                <button type="button" name="eliminar"  (click)='deleteLogico(historia)'
-                                                    class="btn btn-danger">Eliminar</button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                                <!--aca se tiene que establecer un atributo, una directiva, que permita pasar, inyectar, el paginador
-                              al componente paginator.component. [atributo establecido en clientes.component]. "atributo de la 
-                              clase padre(clientes.componente)"; lo acabo de realizar es una forma de inyeccion de dependencia
-                              entre un componente padre e hijo.
-                              ngIf="", validamos que el paginador exista, con esto se espera que el componente padre(cliente.component)
-                              haya asignado el paginador, el response, al paginador-->
-                              <paginator-nav *ngIf="paginador" [paginador] = "paginador"></paginator-nav>
+                        <button type="button" name="editar"
+                            [routerLink]="['/historias/formulario', historia.his_codigo]"
+                            class="btn btn-primary">Editar</button>
+                    </td>
+                    <td *ngIf="authService.hasRole('ROLE_ADMIN')">
+                        <!--va pasar el objeto de la fila actual-->
+                        <button type="button" name="eliminar" (click)='deleteLogico(historia)'
+                            class="btn btn-danger">Eliminar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-                            </div>
-                        </div>
-
-                        <!-- end -->
+</div>
+</div>
+<!-- end -->

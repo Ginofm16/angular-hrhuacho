@@ -23,6 +23,18 @@ export class ProgramacionService {
 
     constructor(private http: HttpClient, private router: Router) { }
 
+    getProgramacionesIndex(): Observable<any>{
+      return this.http.get(this.urlEndPoint).pipe(
+
+          map((response:any) => {
+              this.programaciones = response.content as Programacion[];
+
+              return response;
+          })
+      );
+  }
+
+    /*
     getProgramaciones(page: number): Observable<any>{
      
       return this.http.get(this.urlEndPoint+'/page/'+page).pipe(
@@ -36,7 +48,7 @@ export class ProgramacionService {
               return response;
           })
       );
-  }
+  }*/
 /*
     getProgramacionEspecialidad( page:number, codCon:String):Observable<any>{
   

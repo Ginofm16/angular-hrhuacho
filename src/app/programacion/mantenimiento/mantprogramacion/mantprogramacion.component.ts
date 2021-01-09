@@ -1,61 +1,86 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Consultorio } from 'src/app/calendar/consultorio';
 import { ProgramacionService } from '../../programacion.service';
 import { Programacion } from '../../programacion';
 import Swal from 'sweetalert2';
 import { Router, ActivatedRoute } from '@angular/router';
-import { tap } from 'rxjs/operators';
+import { tap, map } from 'rxjs/operators';
 import { AuthService } from 'src/app/personal/auth.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-mantprogramacion',
-  templateUrl: './mantprogramacion.component.html',
-  styleUrls: ['./mantprogramacion.component.css']
+  templateUrl: './mantprogramacion.component.html'
 })
-export class MantprogramacionComponent implements OnInit {
+export class MantprogramacionComponent implements OnInit, OnDestroy {
 
-  paginador: any;
+  dtOptions: DataTables.Settings = {};
   codConsultorio: String;
+  horarioFrecuencia: String;
   programaciones: Programacion[];
   programacion: Programacion;
   private errores: string[];
 
-  constructor(private programacionService: ProgramacionService, private router : Router,
-              private activatedRoute: ActivatedRoute,
-              private authService: AuthService) { }
+  prograList: Array<Programacion> = [];
+
+  // We use this trigger because fetching the list of persons can be quite long,
+  // thus we ensure the data is fetched before rendering
+  dtTrigger: Subject<any> = new Subject<any>();
+
+  constructor(private programacionService: ProgramacionService, private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private authService: AuthService) { }
+
+
 
   ngOnInit() {
     this.codConsultorio = this.programacionService.codConsultorio;
-    
-    this.activatedRoute.paramMap.subscribe(params => {
-      let page: number =+params.get('page');
 
-      if(!page){
-        page = 0;
-      }
 
-      /*this.programacionService.getProgramacionEspecialidad(page, this.codConsultorio).pipe(
-        tap(response => {
-          (response.content as Programacion[]).forEach(programacion =>
-            console.log(programacion.pro_fecha));
+    this.programacionService.getProgramacionesIndex().subscribe(programaciones => {
 
-        })
-      )*/
-      this.programacionService.getProgramaciones(page).pipe(
-        tap(response => {
-          (response.content as Programacion[]).forEach(programacion =>
-            console.log(programacion.pro_fecha));
 
-        })
-      )
-      .subscribe(
-        (response) => {
-          this.programaciones = response.content as Programacion[];
-          this.paginador = response;
-          
+      console.log(":::::::::::PROGRAMACIONES:::::::::.");
+      (programaciones as Programacion[]).forEach(element => {
+        console.log(parseInt(element.pro_hora_inicio.substring(0, 2)));
+
+        if (element.pro_hora_inicio >= '12:00' ) {
+          if (element.pro_hora_inicio >= '01:00' ) {
+            if (element.pro_hora_inicio < '20:00') {
+              let hora = '0' + (parseInt(element.pro_hora_inicio.substring(0, 2)) - 12) + ':' + element.pro_hora_inicio.substring(3) + ' PM';
+              element.pro_hora_inicio = hora;
+            }else{
+              let hora = (parseInt(element.pro_hora_inicio.substring(0, 2)) - 12) + ':' + element.pro_hora_inicio.substring(3) + ' PM';
+              element.pro_hora_inicio = hora;
+            }
+          }else{
+            let hora = (parseInt(element.pro_hora_inicio.substring(0, 2)) - 12) + ':' + element.pro_hora_inicio.substring(3) + ' PM';
+            element.pro_hora_inicio = hora;
+          }
+
+        } else {
+          let hora = element.pro_hora_inicio + ' AM';
+          element.pro_hora_inicio = hora;
         }
-      )
-    })
+
+        this.prograList.push(element);
+
+      });
+    
+      this.programaciones = this.prograList;
+      this.dtTrigger.next();
+    });
+
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 5
+    };
+
+  }
+
+  ngOnDestroy(): void {
+    // Do not forget to unsubscribe the event
+    this.dtTrigger.unsubscribe();
   }
 
   delete(programacion: Programacion): void {
@@ -98,29 +123,31 @@ export class MantprogramacionComponent implements OnInit {
     });
   }
 
-  deleteLogico(programacion: Programacion):void{
+  deleteLogico(programacion: Programacion): void {
     programacion.pro_estado = false;
     this.programacionService.update(programacion)
-    /*dentro de subscribe, se registra el observador, que seria la respuesta*/
-    .subscribe(json => {
-      this.router.navigate(['/programacion/mantenimiento'])
-      /*alerta.(titulo - el mensaje, con comillas de interpolacion (``) para poder concatenar
-    con una variable- creado con éxito - el tipo de mensaje)*/
-      Swal.fire('Programación Inactivo',`${json.mensaje}: ${json.programacion.pro_codigo}`,'success')
-    },
-    /*(referente a validacion del backend)como segundo parametro, seria cuando sale mal la operacion.
-     err, parametro que se estaria recibiendo por argumento; asi como arriba se recibe al cliente cuando
-     todo sale bien.*/
-      err =>{
-        /*error, atributo del objeto error(err) que contiene el json; y en el json pasamos los errores
-        dentro del parametro errors, como viene any se convierte a un string[]*/
-        this.errores = err.error.errors as string[];
-        console.error('Código del error desde el backend'+ err.status);
-        console.error(err.error.errors);
-        
-      }
+      /*dentro de subscribe, se registra el observador, que seria la respuesta*/
+      .subscribe(json => {
+        this.router.navigate(['/programacion/mantenimiento'])
+        /*alerta.(titulo - el mensaje, con comillas de interpolacion (``) para poder concatenar
+      con una variable- creado con éxito - el tipo de mensaje)*/
+        Swal.fire('Programación Inactivo', `${json.mensaje}: ${json.programacion.pro_codigo}`, 'success')
+      },
+        /*(referente a validacion del backend)como segundo parametro, seria cuando sale mal la operacion.
+         err, parametro que se estaria recibiendo por argumento; asi como arriba se recibe al cliente cuando
+         todo sale bien.*/
+        err => {
+          /*error, atributo del objeto error(err) que contiene el json; y en el json pasamos los errores
+          dentro del parametro errors, como viene any se convierte a un string[]*/
+          this.errores = err.error.errors as string[];
+          console.error('Código del error desde el backend' + err.status);
+          console.error(err.error.errors);
 
-    )
+        }
+
+      )
   }
+
+
 
 }

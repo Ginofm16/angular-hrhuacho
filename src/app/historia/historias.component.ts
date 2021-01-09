@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit, NgZone, OnDestroy } from '@angular/core';
 import { Historia } from './historia';
 import { HistoriaService} from './historia.service';
 import { ModalService} from './detalle/modal.service';
@@ -7,16 +7,18 @@ import { tap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../personal/auth.service';
 import { MenuComponent } from '../menu/menu.component';
-
+import { Subject } from 'rxjs';
 
 
 @Component({
   selector: 'app-historias',
   templateUrl: './historias.component.html'
 })
-export class HistoriasComponent implements OnInit {
+export class HistoriasComponent implements OnInit, OnDestroy {
 
+  dtOptions: DataTables.Settings = {};
   historias: Historia[];
+  historiasIndex: Historia[];
 
   paginador: any;
   historiaSeleccionada: Historia;
@@ -25,16 +27,29 @@ export class HistoriasComponent implements OnInit {
   menu: MenuComponent;
   contador:number=0;
 
+  // We use this trigger because fetching the list of persons can be quite long,
+  // thus we ensure the data is fetched before rendering
+  dtTrigger: Subject<any> = new Subject<any>();
+
   constructor(private historiaService: HistoriaService,
     private modalService: ModalService,
     private authService: AuthService,
     private router: Router,
               private activatedRoute: ActivatedRoute,
               private zone: NgZone) { }
-
-              
-
+ 
   ngOnInit() {
+
+    this.historiaService.getHistoriasIndex().subscribe(historia => {
+        this.historiasIndex = historia;
+     
+    });
+
+
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 5
+    };
     
     this.activatedRoute.paramMap.subscribe(params => {
       let page: number =+params.get('page');
@@ -53,11 +68,17 @@ export class HistoriasComponent implements OnInit {
         (response) => {
           this.historias = response.content as Historia[];
           this.paginador = response;
-          
+          // Calling the DT trigger to manually render the table
+          this.dtTrigger.next();
         }
       )
     })
 
+  }
+
+  ngOnDestroy(): void {
+    // Do not forget to unsubscribe the event
+    this.dtTrigger.unsubscribe();
   }
 
   reloadPage() { //click handler or similar
