@@ -1,4 +1,4 @@
-import { Personal } from './personal';
+import { Personal } from '../personal';
 import { Role } from './role';
 
 export class Usuario{

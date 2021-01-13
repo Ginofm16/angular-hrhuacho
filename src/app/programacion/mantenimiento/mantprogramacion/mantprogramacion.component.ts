@@ -19,7 +19,9 @@ export class MantprogramacionComponent implements OnInit, OnDestroy {
   horarioFrecuencia: String;
   programaciones: Programacion[];
   programacion: Programacion;
+  private programacionDelete:Programacion = new Programacion();
   private errores: string[];
+
 
   prograList: Array<Programacion> = [];
 
@@ -34,13 +36,13 @@ export class MantprogramacionComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
+
     this.codConsultorio = this.programacionService.codConsultorio;
 
 
     this.programacionService.getProgramacionesIndex().subscribe(programaciones => {
 
 
-      console.log(":::::::::::PROGRAMACIONES:::::::::.");
       (programaciones as Programacion[]).forEach(element => {
         console.log(parseInt(element.pro_hora_inicio.substring(0, 2)));
 
@@ -68,6 +70,7 @@ export class MantprogramacionComponent implements OnInit, OnDestroy {
       });
     
       this.programaciones = this.prograList;
+    
       this.dtTrigger.next();
     });
 
@@ -125,6 +128,10 @@ export class MantprogramacionComponent implements OnInit, OnDestroy {
 
   deleteLogico(programacion: Programacion): void {
     programacion.pro_estado = false;
+    this.programacionDelete.pro_codigo = programacion.pro_codigo;
+    this.programacionDelete.pro_estado = programacion.pro_estado;
+    this.programacionDelete.pro_fecha = programacion.pro_fecha;
+    
     this.programacionService.update(programacion)
       /*dentro de subscribe, se registra el observador, que seria la respuesta*/
       .subscribe(json => {

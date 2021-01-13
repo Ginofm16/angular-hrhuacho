@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Personal } from './personal';
-import { AuthService } from './auth.service';
+import { Personal } from '../personal';
+import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { Usuario } from './usuario';
+
 
 @Component({
   selector: 'app-login',

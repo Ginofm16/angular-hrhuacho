@@ -1,1 +1,123 @@
-<p>formprogramacion works!</p>
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+      <div class="main-body">
+        <div class="page-wrapper">
+  
+          <div class="page-body">
+            <div class="row">
+              <!--start-->
+  
+              <div class="card bg-dark text-white mx-auto" style="width: 50%">
+  
+                <div class="card-header bg-primary">{{titulo}}</div>
+                <div class="card-body">
+  
+                  <form #programacionForm="ngForm" class="container">
+
+                    <div class="form-group row mb-1">
+                        <!--col-sm-2, del total de 12 columnas que exite va ocupar 2-->
+                        <label for="consultorio" class="col-form-label-sm col-sm-4">Consultorio</label>
+                        <div class="col-sm-6 pl-0 mb-0">
+                          <select [compareWith]="compararConsultorio" class="form-control-sm" [(ngModel)]="programacion.consultorio" name="consultorio" >
+                            <!--undefined, no esta definido, es como si fuera un null, pero en typescript se maneja como undefined-->
+                            <option [ngValue]="undefined">--- Seleccionar consultorio ---</option>
+                            <option *ngFor="let consultorio of consultorios" [ngValue]="consultorio">{{consultorio.con_nombre}}</option>
+                          </select>
+    
+                        </div>
+                      </div>
+
+                      <!--FEcha-->
+                    <div class="form-group row mb-1">
+                        <label for="pro_fecha" class="col-form-label-sm col-md-4">Fecha</label>
+                        <div class="col-md-8 pl-0">
+                          <!--required-->
+                          <input [(ngModel)]="programacion.pro_fecha" name="pro_fecha" type="date" id="date" >
+                        </div>
+                      </div>
+
+                      <div class="form-group row mb-1">
+                        <label for="pro_hora_inicio" class="col-form-label-sm col-md-4">Hora</label>
+                        <div class="col-md-8 pl-0">
+                          <input [(ngModel)]="programacion.pro_hora_inicio" type="time" name="hora" min="18:00"
+                                     max="24:00" >
+                        </div>
+                      </div>
+
+                      <div class="form-group row mb-1">
+                        <label for="pro_num_turno" class="col-form-label-sm col-sm-4">Cantidad Turno</label>
+                        <div class="col-sm-8 pl-0">
+                          <input type="text" class="form-control form-control-sm mb-0" [(ngModel)]="programacion.pro_num_turno" name="pro_num_turno"
+                            #pro_num_turno="ngModel" required minlength="1" pattern="^([0-9])*$" >
+                          <div class="alert alert-danger my-1 py-1"
+                            *ngIf="pro_num_turno.invalid && (pro_num_turno.dirty || pro_num_turno.touched)">
+                            <div *ngIf="pro_num_turno.errors.required">
+                              <!--aca se muestra el mensaje de error solo para el Required-->
+                              Cantidad es requerido
+                            </div>
+                            <div *ngIf="pro_num_turno.errors.minlength">
+                                Cantidad debe tener al menos 1 caracteres
+                            </div>
+                            <div *ngIf="pro_num_turno.errors.pattern">
+                              Solo valores numéricos
+                          </div>
+                          </div>
+                        </div>
+                      </div>
+
+
+                      <div *ngIf="editar" class="form-group row mb-1"
+                      [class.has-error]="pro_estado.touched && pro_estado.invalid">
+                      <label for="pro_estado" class="control-label col-sm-4">Estado</label>
+                      <div class="col-sm-8 pl-0">
+                        <!--required-->
+                        <mat-radio-group name="pro_estado" required #pro_estado="ngModel"
+                          [(ngModel)]="programacion.pro_estado">
+                          <mat-radio-button class="my-1 py-0" *ngFor="let estado of estados" name="pro_estado"
+                            [value]="estado.valor" style="margin: 10px">
+                            {{estado.muestraValor}}
+                          </mat-radio-button>
+                        </mat-radio-group>
+                        <div class="alert alert-danger my-0 py-1"
+                          *ngIf="pro_estado.invalid && (pro_estado.dirty || pro_estado.touched)">
+                          <div *ngIf="pro_estado.errors.required">
+                            <!--aca se muestra el mensaje de error solo para el Required-->
+                            Selección de estado es requerido
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+  
+                    <div class="form-group row mb-1">
+                        <div class="col-sm-6">
+                          <!--ngIf, si el codigo de programaciion no existe se va mostrar el boton crear. else, sino
+              utlizaremos un template para colocar el boton actualizar; la etiqueta elseBlock para Crear el
+            template-->
+                          <!--trabajando validacion, teniendo como partida el ngFor (puesto en la etiqueta de form)
+                !historiaForm.form.valid, va retornar true o false; (pero  "!" lo negara)-->
+                          <button class="btn btn-primary" role="button" (click)='create()'
+                            *ngIf="!programacion.pro_codigo else elseBlock" [disabled]="!programacionForm.form.valid">Crear</button>
+                          <ng-template #elseBlock>
+                            <button class="btn btn-primary" role="button" (click)='update()'
+                              [disabled]="!programacionForm.form.valid">Actualizar</button>
+                          </ng-template>
+                        </div>
+                      </div>
+
+                  </form>
+  
+  
+                </div>
+              </div>
+              <!--end-->
+  
+            </div>
+          </div>
+  
+          <div id="styleSelector">
+  
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

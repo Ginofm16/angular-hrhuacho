@@ -42,7 +42,13 @@ export class HistoriasComponent implements OnInit, OnDestroy {
 
     this.historiaService.getHistoriasIndex().subscribe(historia => {
         this.historiasIndex = historia;
-     
+        // Calling the DT trigger to manually render the table
+        this.dtTrigger.next();
+    });
+
+    //solo cuando se hace next()
+    this.historiaService.historiaCambio.subscribe(data => {
+      this.historiasIndex = data;
     });
 
 
@@ -51,29 +57,7 @@ export class HistoriasComponent implements OnInit, OnDestroy {
       pageLength: 5
     };
     
-    this.activatedRoute.paramMap.subscribe(params => {
-      let page: number =+params.get('page');
-
-      if(!page){
-        page = 0;
-      }
-
-      this.historiaService.getHistorias(page).pipe(
-        tap(response => {
-          (response.content as Historia[]).forEach(historia =>
-            console.log(historia.his_nombre));
-
-        })
-      ).subscribe(
-        (response) => {
-          this.historias = response.content as Historia[];
-          this.paginador = response;
-          // Calling the DT trigger to manually render the table
-          this.dtTrigger.next();
-        }
-      )
-    })
-
+  
   }
 
   ngOnDestroy(): void {
@@ -139,22 +123,16 @@ export class HistoriasComponent implements OnInit, OnDestroy {
     /*dentro de subscribe, se registra el observador, que seria la respuesta en este caso el cliente*/
     .subscribe(json => {
       this.router.navigate(['/historias'])
-      /*alerta.(titulo - el mensaje, con comillas de interpolacion (``) para poder concatenar
-    con una variable- creado con éxito - el tipo de mensaje)*/
       Swal.fire('Historia Inactivo',`${json.mensaje}: ${json.historia.his_nombre}`,'success')
+      this.historiaService.getHistoriasIndex().subscribe(data => {
+        this.historiaService.historiaCambio.next(data);
+      })
     },
-    /*(referente a validacion del backend)como segundo parametro, seria cuando sale mal la operacion.
-     err, parametro que se estaria recibiendo por argumento; asi como arriba se recibe al cliente cuando
-     todo sale bien.*/
       err =>{
-        /*error, atributo del objeto error(err) que contiene el json; y en el json pasamos los errores
-        dentro del parametro errors, como viene any se convierte a un string[]*/
         this.errores = err.error.errors as string[];
         console.error('Código del error desde el backend'+ err.status);
         console.error(err.error.errors);
-        
       }
-
     )
   }
 

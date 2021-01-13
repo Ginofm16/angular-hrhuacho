@@ -14,150 +14,119 @@ import { DatePipe } from '@angular/common';
 })
 export class ProgramacionService {
 
-    programaciones:Programacion[];
+  programaciones: Programacion[];
 
-    codConsultorio : String;
+  codConsultorio: String;
 
 
-    private urlEndPoint:string = 'http://localhost:8080/api/programacion';
+  private urlEndPoint: string = 'http://localhost:8080/api/programacion';
 
-    constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
-    getProgramacionesIndex(): Observable<any>{
-      return this.http.get(this.urlEndPoint).pipe(
+  getProgramacionesIndex(): Observable<any> {
+    return this.http.get(this.urlEndPoint).pipe(
 
-          map((response:any) => {
-              this.programaciones = response.content as Programacion[];
+      map((response: any) => {
+        this.programaciones = response.content as Programacion[];
 
-              return response;
-          })
-      );
+        return response;
+      })
+    );
   }
 
-    /*
-    getProgramaciones(page: number): Observable<any>{
-     
-      return this.http.get(this.urlEndPoint+'/page/'+page).pipe(
 
-          map((response:any) => {
-              this.programaciones = response.content as Programacion[];
+  create(programacion: Programacion): Observable<Programacion> {
+    console.log("Create::::::::");
+    console.log(programacion);
+    return this.http.post(this.urlEndPoint, programacion).pipe(
+      map((response: any) => response.programacion as Programacion),
+      catchError(e => {
+        if (e.status == 400) {
+          return throwError(e);
+        }
 
-              console.log("::::getProgramaciones");
-              console.log(response);
+        if (e.error.mensaje) {
+          console.error(e.error.mensaje);
+        }
 
-              return response;
-          })
-      );
-  }*/
-/*
-    getProgramacionEspecialidad( page:number, codCon:String):Observable<any>{
-  
-        return this.http.get(this.urlEndPoint+'/page/'+page+'/codigo/'+codCon).pipe(
+        return throwError(e);
+      })
+    )
+  }
 
-            map((response:any) => {
-                this.programaciones = response.content as Programacion[];
-
-                this.programaciones.map(programaciones => {
-                    let datePipe = new DatePipe('es');
-
-                    return this.programaciones;
-                })
-
-                return response;
-            })
-
-        );
-    }*/
-
-    create(programacion: Programacion):Observable<Programacion>{
-
-      return this.http.post(this.urlEndPoint, programacion).pipe(
-          map((response: any)=> response.programacion as Programacion),
-          catchError(e => {
-              if(e.status==400){
-                  return throwError(e);
-              }
-
-              if(e.error.mensaje){
-                console.error(e.error.mensaje);
-              }
-
-              return throwError(e);
-          })
-      )
-    }
-
-    getProgramacion(codigo):Observable<Programacion>{
-      return this.http.get<Programacion>(`${this.urlEndPoint}/${codigo}`).pipe(
-        /*aca dentro se puede tener los operadores del flujo. catchError, obtenemos el error por argumento*/
-        catchError(e => {
-          if(e.status != 401 && e.error.mensaje){
+  getProgramacion(codigo): Observable<Programacion> {
+    return this.http.get<Programacion>(`${this.urlEndPoint}/${codigo}`).pipe(
+      /*aca dentro se puede tener los operadores del flujo. catchError, obtenemos el error por argumento*/
+      catchError(e => {
+        if (e.status != 401 && e.error.mensaje) {
           this.router.navigate(['/historias']);
 
           console.error(e.error.mensaje);
-          }
-          /*cuando ocurra el error la idea es de que retorne o regrese al listado de cliente, por ello
-          se utiliza el router para redirigir a Clientes, al listado*/
-          /*retornar el error, en un tipo Observable*/
+        }
+        /*cuando ocurra el error la idea es de que retorne o regrese al listado de cliente, por ello
+        se utiliza el router para redirigir a Clientes, al listado*/
+        /*retornar el error, en un tipo Observable*/
+        return throwError(e);
+      })
+    );
+  }
+
+  update(programacion: Programacion): Observable<any> {
+    console.log("UPDATE SERVICE ::::::::::");
+    console.log(programacion);
+    return this.http.put<any>(`${this.urlEndPoint}/${programacion.pro_codigo}`, programacion).pipe(
+      catchError(e => {
+        if (e.status == 400) {
           return throwError(e);
-        })
-      );
-    }
+        }
 
-    update(programacion: Programacion):Observable<any>{
-      return this.http.put<any>(`${this.urlEndPoint}/${programacion.pro_codigo}`,programacion).pipe(
-          catchError(e =>{
-              if(e.status==400){
-                  return throwError(e);
-              }
-
-              if(e.error.mensaje){
-              console.error(e.error.mensaje);
-              Swal.fire(
-                  e.error.mensaje,
-                  e.error.error,
-                  'error'
-              );
-              }
-
-              return throwError(e);
-          })
-      )
-    }
-
-    delete(codigo:number): Observable<Programacion>{
-      /*se envia una peticion de tipo DElETE, porque se quiere eliminar, y se pasa la url*/
-      return this.http.delete<Programacion>(`${this.urlEndPoint}/${codigo}`).pipe(
-        catchError(e => {
+        if (e.error.mensaje) {
           console.error(e.error.mensaje);
           Swal.fire(
-            /*mensaje y err*/
             e.error.mensaje,
             e.error.error,
             'error'
           );
-          /*en este caso no es necesario enviar a otra pagina (utilzando router), porque
-          la idea es permanecer dentro del formulario para corregir el error*/
-          return throwError(e);
-        })
-      )
-    }
+        }
 
-    getPersonales(): Observable<Personal[]>{
+        return throwError(e);
+      })
+    )
+  }
 
-      return this.http.get<Personal[]>(this.urlEndPoint+'/personal');
+  delete(codigo: number): Observable<Programacion> {
+    /*se envia una peticion de tipo DElETE, porque se quiere eliminar, y se pasa la url*/
+    return this.http.delete<Programacion>(`${this.urlEndPoint}/${codigo}`).pipe(
+      catchError(e => {
+        console.error(e.error.mensaje);
+        Swal.fire(
+          /*mensaje y err*/
+          e.error.mensaje,
+          e.error.error,
+          'error'
+        );
+        /*en este caso no es necesario enviar a otra pagina (utilzando router), porque
+        la idea es permanecer dentro del formulario para corregir el error*/
+        return throwError(e);
+      })
+    )
+  }
 
-    }
+  getPersonales(): Observable<Personal[]> {
 
-    getConsultorios(): Observable<Consultorio[]>{
+    return this.http.get<Personal[]>(this.urlEndPoint + '/personal');
 
-      return this.http.get<Consultorio[]>(this.urlEndPoint+'/consultorio');
+  }
 
-    }
+  getConsultorios(): Observable<Consultorio[]> {
 
-    recibirDato(codConsultorio){
-      console.log("SSSSSSSSSSSSSEEEEEEERVVV"+codConsultorio);
-      this.codConsultorio = codConsultorio;
-    }
+    return this.http.get<Consultorio[]>(this.urlEndPoint + '/consultorio');
+
+  }
+
+  recibirDato(codConsultorio) {
+    console.log("SSSSSSSSSSSSSEEEEEEERVVV" + codConsultorio);
+    this.codConsultorio = codConsultorio;
+  }
 
 }

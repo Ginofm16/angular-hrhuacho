@@ -4,18 +4,18 @@
 
         <h5 class="card-title mb-4">LISTADO DE PROGRAMACIÓN</h5>
 
-        <!--colocar una condicion para mostrar los datos cuando vengan, y si esque no hay datos
-                            que se muestre un mensaje-->
         <div *ngIf="programaciones?.length==0" class="alert alert-info">
             No hay registro en la base de datos!
         </div>
-        <div class="table-responsive">
-        <table  datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
-            <thead>
+        
+   
+        <div class="table-responsive" [ngStyle]="programaciones?.length>0 ? {'display': 'block'} : {'display': 'none'}">
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover" >
+            <thead >
                 <tr>
                     <th>Id</th>
                     <th>Consultorio</th>
-                    <th>Personal</th>
+                    <th>Usuario</th>
                     <th>Fecha</th>
                     <th>Hora</th>
                     <th>Num. Turno</th>
@@ -24,12 +24,12 @@
                     <th *ngIf="authService.hasRole('ROLE_ADMIN')">Eliminar</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr *ngFor="let programacion of programaciones">
+            <tbody >
+                <tr *ngFor="let programacion of programaciones" >
                     <td>{{programacion.pro_codigo}}</td>
                     <td>{{programacion.consultorio.con_nombre}}</td>
                     <!--OTRA FORMA(formato) de dar formato-->
-                    <td>{{programacion.personal.per_nombre}}</td>
+                    <td>{{programacion.usuario.personal.per_nombre}}</td>
                     <td>{{programacion.pro_fecha}}</td>
                     <td>{{programacion.pro_hora_inicio}}</td>
                     <td>{{programacion.pro_num_turno}}</td>
@@ -42,14 +42,14 @@
                     </td>
                     <td *ngIf="authService.hasRole('ROLE_ADMIN')">
                         <!--va pasar el objeto de la fila actual-->
-                        <button type="button" name="eliminar" (click)='deleteLogico(historia)'
+                        <button type="button" name="eliminar" (click)='deleteLogico(programacion)'
                             class="btn btn-danger">Eliminar</button>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
-
+  
 </div>
 </div>
 <!-- end -->

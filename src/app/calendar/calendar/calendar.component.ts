@@ -1,3 +1,4 @@
+import { PersonalService } from './../../personal/personal.service';
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { CalendarService } from '../calendar.service';
@@ -11,6 +12,7 @@ import { Consultorio } from 'src/app/consultorio/consultorio';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Pais } from 'src/app/historia/pais';
+import { Personal } from 'src/app/personal/personal';
 
 @Component({
   selector: 'app-calendar',
@@ -25,7 +27,7 @@ export class CalendarComponent implements OnChanges {
 
   calendarPro: cCalendar[];
   consultorios: Consultorio[];
-
+  personal: Personal;
 
   @Input() consultorio: Consultorio;
 
@@ -42,7 +44,8 @@ export class CalendarComponent implements OnChanges {
 
   constructor(private calendarService: CalendarService, 
     private router: Router, 
-    private http: HttpClient) { }
+    private http: HttpClient,
+    private personalService: PersonalService) { }
   
     /*
   ngOnInit(): void {
@@ -76,20 +79,40 @@ export class CalendarComponent implements OnChanges {
 */
   ngOnChanges(changes: SimpleChanges) {
 
-    console.log("OnChanges_BEFORE::::"+ this.consultorio.con_codigo);
     this.getCalendar(this.consultorio.con_codigo).subscribe(events => {
     
-      
-      console.log("OnChanges_AFTER::::"+ changes.consultorio.currentValue.con_codigo);
 
       this.iterador = 0;
       this.numProgra = events.length;
       this.horariosCalendar = new Array(this.numProgra);
 
       console.log(this.numProgra);
+      let hora;
 
       (events).forEach(event => {
-        this.horariosCalendar[this.iterador] = {start: event.pro_fecha, title: event.consultorio.con_nombre+"\n"+event.pro_hora_inicio+""+event.pro_sigla+"\n"+event.personal.per_nombre+" "+event.personal.per_ape_paterno}
+        
+        if (event.pro_hora_inicio >= '12:00' ) {
+          if (event.pro_hora_inicio >= '01:00' ) {
+            if (event.pro_hora_inicio < '20:00') {
+             hora = '0' + (parseInt(event.pro_hora_inicio.substring(0, 2)) - 12) + ':' + event.pro_hora_inicio.substring(3) + ' PM';
+              event.pro_hora_inicio = hora;
+            }else{
+               hora = (parseInt(event.pro_hora_inicio.substring(0, 2)) - 12) + ':' + event.pro_hora_inicio.substring(3) + ' PM';
+              event.pro_hora_inicio = hora;
+            }
+          }else{
+             hora = (parseInt(event.pro_hora_inicio.substring(0, 2)) - 12) + ':' + event.pro_hora_inicio.substring(3) + ' PM';
+            event.pro_hora_inicio = hora;
+          }
+
+        } else {
+           hora = event.pro_hora_inicio + ' AM';
+          event.pro_hora_inicio = hora;
+        }
+
+
+        //this.horariosCalendar[this.iterador] = {start: event.pro_fecha, title: event.consultorio.con_nombre+"\n"+event.pro_hora_inicio+"\n"+event.personal.per_nombre+" "+event.personal.per_ape_paterno}
+        this.horariosCalendar[this.iterador] = {start: event.pro_fecha, title: event.consultorio.con_nombre+"\n"+hora+"\n"+event.usuario.personal.per_nombre+" "+event.usuario.personal.per_ape_paterno}
         this.iterador = this.iterador + 1;
       })
       console.log(this.horariosCalendar);

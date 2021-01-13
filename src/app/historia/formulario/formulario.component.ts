@@ -1,3 +1,4 @@
+import { EstudioService } from './../../estudio/estudio.service';
 import { Component, OnInit } from '@angular/core';
 import { Historia } from '../historia';
 import { HistoriaService } from '../historia.service';
@@ -7,6 +8,7 @@ import {Router, ActivatedRoute } from '@angular/router';
 import { MatSelectModule } from '@angular/material/select';
 
 import Swal from 'sweetalert2';
+import { Estudio } from 'src/app/estudio/estudio';
 
 
 @Component({
@@ -24,15 +26,18 @@ export class FormularioComponent implements OnInit {
   private errores: string[];
   paises: Pais[];
   paisSeleccionado: Pais[];
+  estudios: Estudio[];
 
   constructor(private historiaService: HistoriaService,
               private router:Router,
-              private activatedRoute: ActivatedRoute) { }
+              private activatedRoute: ActivatedRoute,
+              private estudioService: EstudioService) { }
 
   ngOnInit() {
 
     this.cargarHistoria();
     this.historiaService.getPaises().subscribe(paises => this.paises = paises);
+    this.estudioService.getEstudiosIndex().subscribe(estudios => this.estudios = estudios);
 
   }
 
@@ -49,14 +54,6 @@ export class FormularioComponent implements OnInit {
   estados = [
     {valor:false, muestraValor:'Inactivo'},
     {valor:true, muestraValor:'Activo'}
-  ];
-
-  gEstudios = [
-    {valor:'ninguna', muestraValor:'Ninguna'},
-    {valor:'primaria', muestraValor:'Primaria'},
-    {valor:'secundaria', muestraValor:'Secundaria'},
-    {valor:'tecnica', muestraValor:'Técnica'},
-    {valor:'universitaria', muestraValor:'Universitaria'}
   ];
 
   create(): void{
@@ -139,6 +136,13 @@ export class FormularioComponent implements OnInit {
       return true;
     }
     return p1==null || p2==null || p1== undefined || p2== undefined ? false: p1.pais_codigo == p2.pais_codigo;
+  }
+
+  compararEstudios(p1: Estudio, p2:Estudio): boolean{
+    if(p1 == undefined && p2 == undefined){
+      return true;
+    }
+    return p1==null || p2==null || p1== undefined || p2== undefined ? false: p1.est_codigo == p2.est_codigo;
   }
 
 

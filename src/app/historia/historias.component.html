@@ -8,11 +8,11 @@
 
         <!--colocar una condicion para mostrar los datos cuando vengan, y si esque no hay datos
                             que se muestre un mensaje-->
-        <div *ngIf="historias?.length==0" class="alert alert-info">
+        <div *ngIf="historiasIndex?.length==0" class="alert alert-info">
             No hay registro en la base de datos!
         </div>
-        <div class="table-responsive">
-        <table  datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+        <div class="table-responsive" [ngStyle]="historiasIndex?.length>0 ? {'display': 'block'} : {'display': 'none'}">
+        <table  datatable [dtTrigger]="dtTrigger" class="row-border hover">
             <thead>
                 <tr>
                     <th

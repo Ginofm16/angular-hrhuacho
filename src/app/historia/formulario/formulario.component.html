@@ -178,10 +178,10 @@
                     <label for="his_gra_estudio" class="col-form-label-sm col-sm-4">Grado de estudio</label>
                     <div class="col-sm-6 pl-0 mb-0">
 
-                      <select class="form-control-sm " [(ngModel)]="historia.his_gra_estudio" name="his_gra_estudio">
+                      <select [compareWith]="compararEstudios" class="form-control-sm " [(ngModel)]="historia.estudio" name="his_gra_estudio">
                         <!--undefined, no esta definido, es como si fuera un null, pero en typescript se maneja como undefined-->
                         <option [ngValue]="undefined">--- Seleccionar grado de estudio ---</option>
-                        <option *ngFor="let gEst of gEstudios" [ngValue]="gEst.valor">{{gEst.muestraValor}}</option>
+                        <option *ngFor="let estudio of estudios" [ngValue]="estudio">{{estudio.est_nombre}}</option>
                       </select>
 
                     </div>

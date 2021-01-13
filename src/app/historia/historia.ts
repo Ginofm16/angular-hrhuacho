@@ -1,3 +1,4 @@
+import { Estudio } from './../estudio/estudio';
 import {Pais} from './pais';
 
 export class Historia {
@@ -11,7 +12,7 @@ export class Historia {
     his_fec_nacimiento: string;
     his_seguro: string;
     his_genero: string;
-    his_gra_estudio: string;
+    estudio: Estudio;
     his_estado: boolean;
     pais:Pais;
 }

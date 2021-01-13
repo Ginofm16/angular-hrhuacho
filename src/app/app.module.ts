@@ -24,7 +24,7 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { HistoriaService } from './historia/historia.service';
 
 import { DetalleComponent } from './historia/detalle/detalle.component';
-import { LoginComponent } from './personal/login.component';
+import { LoginComponent } from './personal/login/login.component';
 import { TokenInterceptor } from './personal/interceptors/token.interceptor';
 import { AuthInterceptor } from './personal/interceptors/auth.interceptor';
 import { CitaMedicaComponent } from './cita-medica/cita-medica.component';
@@ -47,6 +47,7 @@ import { MantprogramacionComponent } from './programacion/mantenimiento/mantprog
 
 
 import { DataTablesModule } from 'angular-datatables';
+import { FormCitamedicaComponent } from './cita-medica/formulario/form-citamedica.component';
 
 registerLocaleData(localeES, 'es');
 
@@ -58,7 +59,9 @@ const routes: Routes = [
   {path:'historias/page/:page', component: HistoriasComponent},
   {path:'cuerpo', component: CuerpoComponent},
   {path:'login', component: LoginComponent},
-  {path:'cita-medica/form/:id', component: CitaMedicaComponent},
+  {path:'cita-medica/formulario/:id', component: FormCitamedicaComponent},
+  {path:'cita-medica/formulario', component: FormCitamedicaComponent},
+  {path:'cita-medica', component: CitaMedicaComponent},
   {path:'calendar', component: CalendarComponent},
   {path:'programacion', component:ProgramacionComponent},
   {path:'programacion/mantenimiento', component:MantprogramacionComponent},
@@ -84,7 +87,8 @@ const routes: Routes = [
     ProgramacionComponent,
     ConsultorioComponent,
     FormprogramacionComponent,
-    MantprogramacionComponent
+    MantprogramacionComponent,
+    FormCitamedicaComponent
   ],
   imports: [
     BrowserModule,
