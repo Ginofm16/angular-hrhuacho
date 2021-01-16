@@ -118,7 +118,7 @@ export class FormCrearcitaComponent implements OnInit {
   mostrarProgramacion(programacion?: Programacion): string | undefined {
     console.log("MOSTRAR NOMBRE");
     console.log(programacion);
-    return programacion ? programacion.consultorio.con_nombre: undefined;
+    return programacion ? programacion.consultorio.con_nombre +" "+programacion.pro_fecha: undefined;
   }
 
   create(): void{

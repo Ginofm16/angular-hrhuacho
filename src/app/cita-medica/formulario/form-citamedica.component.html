@@ -14,36 +14,19 @@
 
                                 <form #citaMedicaForm="ngForm" class="container">
 
-                                    <div class="row">
-                                        <div class="col-sm-4 col-md-3 justify-content-end">
-
-                                        </div>
-                                        <div class="col-sm-8 col-md-9 justify-content-end">
-                                            <mat-form-field class="container-mat-form">
-                                                <input type="text" placeholder="programacion" aria-label="Programacion"
-                                                    matInput [formControl]="myControlProgramacion"
-                                                    [matAutocomplete]="auto">
-                                                <mat-autocomplete #auto="matAutocomplete"
-                                                    [displayWith]="mostrarProgramacion"
-                                                    (optionSelected)="seleccionarProgramacion($event)">
-                                                    <mat-option
-                                                        *ngFor="let programacion of programacionFiltrados | async"
-                                                        [value]="programacion">
-                                                        {{programacion.consultorio.con_nombre}}
-                                                        {{programacion.pro_fecha}}
-                                                    </mat-option>
-                                                </mat-autocomplete>
-                                            </mat-form-field>
-                                            <!--autocompleteControl.invalid, si esque no se ha añadido ningun producto para crear items-->
-                                            <div class="alert alert-danger"
-                                                *ngIf="myControlProgramacion.invalid && CuerpoForm.submitted">
-                                                La Programacion no puede no tener items.
-                                            </div>
+                                    <div class="form-group row mb-1">
+                                        <label for="programacion"
+                                            class="col-form-label-sm col-sm-4 col-md-3">Programación</label>
+                                        <div class="col-sm-8 pl-0 col-md-9">
+                                            <input type="text" class="form-control form-control-sm mb-0"
+                                                [(ngModel)]="citaMedica.programacion.consultorio.con_nombre"
+                                                name="programacion" #programacion="ngModel" readonly>
                                         </div>
                                     </div>
 
                                     <div class="form-group row mb-1">
-                                        <label for="cit_exoneracion" class="col-form-label-sm col-sm-4 col-md-3">Cantidad
+                                        <label for="cit_exoneracion"
+                                            class="col-form-label-sm col-sm-4 col-md-3">Cantidad
                                             Exoneración</label>
                                         <div class="col-sm-8 pl-0 col-md-9">
                                             <input type="text" class="form-control form-control-sm mb-0"
