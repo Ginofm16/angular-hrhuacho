@@ -1,2 +1,55 @@
-<p>{{authService.personal.username}}</p>
-<p>{{authService.personal.per_codigo}}</p>
+<div class="card border-primary">
+
+    <div class="card-body text-primary">
+
+        <h5 class="card-title mb-4">LISTADO DE CITA</h5>
+
+        <div *ngIf="citaMedicaIndex?.length==0" class="alert alert-info">
+            No hay registro en la base de datos!
+        </div>
+        
+   
+        <div class="table-responsive" [ngStyle]="citaMedicaIndex?.length>0 ? {'display': 'block'} : {'display': 'none'}">
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover" >
+            <thead >
+                <tr>
+                    <th>Id</th>
+                    <th>Persona</th>
+                    <th>Consultorio</th>
+                    <th>Fecha Cita</th>
+                    <th>Exoneración</th>
+                    <th>Costo Total</th>
+                    <th *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_INFORMATICO')">Editar
+                    </th>
+                    <th *ngIf="authService.hasRole('ROLE_ADMIN')">Eliminar</th>
+                </tr>
+            </thead>
+            <tbody >
+                <tr *ngFor="let citaMedica of citaMedicaIndex" >
+                    <td>{{citaMedica.cit_codigo}}</td>
+                    <td>{{citaMedica.usuario.personal.per_nombre}}</td>
+                    <!--OTRA FORMA(formato) de dar formato-->
+                    <td>{{citaMedica.programacion.consultorio.con_nombre}}</td>
+                    <td>{{citaMedica.programacion.pro_fecha}} {{citaMedica.programacion.pro_hora_inicio}}</td>
+                    <td>{{citaMedica.cit_exoneracion}}</td>
+                    <td>{{citaMedica.cit_costo_total}}</td>
+                    <td *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_INFORMATICO')">
+                        <!--routerLink, con dos argumentos, primero la ruta con el cual estar registrado
+                                  y segundo el id del cliente-->
+                        <button type="button" name="editar"
+                            [routerLink]="['/cita-medica/formulario', citaMedica.cit_codigo]"
+                            class="btn btn-primary">Editar</button>
+                    </td>
+                    <td *ngIf="authService.hasRole('ROLE_ADMIN')">
+                        <!--va pasar el objeto de la fila actual-->
+                        <button type="button" name="eliminar" (click)='deleteLogico(citaMedica)'
+                            class="btn btn-danger">Eliminar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+  
+</div>
+</div>
+<!-- end -->

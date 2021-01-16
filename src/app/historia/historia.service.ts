@@ -8,6 +8,7 @@ import { map, catchError, tap } from 'rxjs/operators';
 
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable()
@@ -17,7 +18,7 @@ export class HistoriaService {
 
     historias: Historia[];
 
-    private urlEndPoint: string = 'http://localhost:8080/api/historias';
+    private urlEndPoint: string = `${environment.HOST}/api/historias`;
 
     historiaCambio = new Subject<Historia[]>();
     mensajeCambio = new Subject<string>();

@@ -13,6 +13,7 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Pais } from 'src/app/historia/pais';
 import { Personal } from 'src/app/personal/personal';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-calendar',
@@ -40,7 +41,7 @@ export class CalendarComponent implements OnChanges {
 
   public locales = [esLocale];
 
-  private urlEndPoint:string = 'http://localhost:8080/api/programacion';
+  private urlEndPoint:string = `${environment.HOST}/api/programacion`;
 
   constructor(private calendarService: CalendarService, 
     private router: Router, 

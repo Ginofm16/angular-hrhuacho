@@ -4,6 +4,7 @@ import { Consultorio } from '../calendar/consultorio';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ProgramacionService } from './programacion.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-programacion',
@@ -27,7 +28,7 @@ export class ProgramacionComponent implements OnInit {
   }
 
   getConsultorios(): Observable<any[]>{
-    return this.http.get<Consultorio[]>('http://localhost:8080/api/consultorios');
+    return this.http.get<Consultorio[]>(`${environment.HOST}/api/consultorios`);
   }
 
   //[routerLink]="['/programacion/mantenimiento']

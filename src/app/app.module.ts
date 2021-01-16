@@ -48,6 +48,8 @@ import { MantprogramacionComponent } from './programacion/mantenimiento/mantprog
 
 import { DataTablesModule } from 'angular-datatables';
 import { FormCitamedicaComponent } from './cita-medica/formulario/form-citamedica.component';
+import { FormCrearcitaComponent } from './cita-medica/formulariocrear/form-crearcita.component';
+import { ModalCrearcitaComponent } from './cita-medica/modalcrear-cita/modal-crearcita.component';
 
 registerLocaleData(localeES, 'es');
 
@@ -59,6 +61,7 @@ const routes: Routes = [
   {path:'historias/page/:page', component: HistoriasComponent},
   {path:'cuerpo', component: CuerpoComponent},
   {path:'login', component: LoginComponent},
+  {path:'cita-medica/crearform/:id', component: FormCrearcitaComponent},
   {path:'cita-medica/formulario/:id', component: FormCitamedicaComponent},
   {path:'cita-medica/formulario', component: FormCitamedicaComponent},
   {path:'cita-medica', component: CitaMedicaComponent},
@@ -88,7 +91,9 @@ const routes: Routes = [
     ConsultorioComponent,
     FormprogramacionComponent,
     MantprogramacionComponent,
-    FormCitamedicaComponent
+    FormCitamedicaComponent,
+    FormCrearcitaComponent,
+    ModalCrearcitaComponent
   ],
   imports: [
     BrowserModule,

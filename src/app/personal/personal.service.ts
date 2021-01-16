@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { catchError, map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class PersonalService {
 
   personales: Personal[];
 
-  private urlEndPoint: string = 'http://localhost:8080/api/personal';
+  private urlEndPoint: string = `${environment.HOST}/api/personal`;
 
   constructor(private http: HttpClient, private router: Router) { }
 

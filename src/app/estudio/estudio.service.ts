@@ -4,13 +4,14 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EstudioService {
 
-  private urlEndPoint:string = 'http://localhost:8080/api/estudios';
+  private urlEndPoint:string = `${environment.HOST}/api/estudios`;
 
   estudios: Estudio[];
 

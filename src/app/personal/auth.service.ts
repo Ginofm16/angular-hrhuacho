@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Usuario } from './login/usuario';
 import { Role } from './login/role';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
@@ -62,7 +63,7 @@ export class AuthService {
   JSON que nos genera el endpoint cuando nos autenticamos en spring con OAuth2 */
   login(personal:Personal):Observable<any>{
 
-    const urlEndpoint = 'http://localhost:8080/oauth/token';
+    const urlEndpoint = `${environment.HOST}/oauth/token`;
 
     /*credenciales de la aplicacion, de la aplicacion angular que seria el clienteId hospital-app
     concatenado con : y la clave del cliente(de la aplicacion), btoa, permite encriptar, convertir en base64*/

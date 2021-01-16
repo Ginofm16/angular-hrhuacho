@@ -66,38 +66,12 @@
                                         </div>
                                     </div>
 
-
-                                    <div *ngIf="editar" class="form-group row mb-1"
-                                        [class.has-error]="cit_estado.touched && cit_estado.invalid">
-                                        <label for="cit_estado" class="control-label col-sm-4">Estado</label>
-                                        <div class="col-sm-8 pl-0">
-                                            <!--required-->
-                                            <mat-radio-group name="cit_estado" required #cit_estado="ngModel"
-                                                [(ngModel)]="citaMedica.cit_estado">
-                                                <mat-radio-button class="my-1 py-0" *ngFor="let estado of estados"
-                                                    name="cit_estado" [value]="estado.valor" style="margin: 10px">
-                                                    {{estado.muestraValor}}
-                                                </mat-radio-button>
-                                            </mat-radio-group>
-                                            <div class="alert alert-danger my-0 py-1"
-                                                *ngIf="cit_estado.invalid && (cit_estado.dirty || cit_estado.touched)">
-                                                <div *ngIf="cit_estado.errors.required">
-                                                    <!--aca se muestra el mensaje de error solo para el Required-->
-                                                    Selección de estado es requerido
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
                                     <div class="form-group row mb-1">
                                         <div class="col-sm-6">
                                             <button class="btn btn-primary" role="button" (click)='create()'
                                                 *ngIf="!citaMedica.cit_codigo else elseBlock"
                                                 [disabled]="!citaMedicaForm.form.valid">Crear</button>
-                                            <ng-template #elseBlock>
-                                                <button class="btn btn-primary" role="button" (click)='update()'
-                                                    [disabled]="!citaMedicaForm.form.valid">Actualizar</button>
-                                            </ng-template>
+                                   
                                         </div>
                                     </div>
 

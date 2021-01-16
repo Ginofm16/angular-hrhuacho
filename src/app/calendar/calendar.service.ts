@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { map} from 'rxjs/operators';
 import { Consultorio } from '../consultorio/consultorio';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable()
@@ -12,7 +13,7 @@ export class CalendarService {
 
   calendar: cCalendar[];
 
-  private urlEndPoint:string = 'http://localhost:8080/api/programacion';
+  private urlEndPoint:string = `${environment.HOST}/api/programacion`;
 
   constructor(private http: HttpClient, private router: Router) { 
 

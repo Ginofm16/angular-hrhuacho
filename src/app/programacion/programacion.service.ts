@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import { Personal } from '../personal/personal';
 import { Consultorio } from '../consultorio/consultorio';
 import { DatePipe } from '@angular/common';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class ProgramacionService {
   codConsultorio: String;
 
 
-  private urlEndPoint: string = 'http://localhost:8080/api/programacion';
+  private urlEndPoint: string = `${environment.HOST}/api/programacion`;
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -128,5 +129,10 @@ export class ProgramacionService {
     console.log("SSSSSSSSSSSSSEEEEEEERVVV" + codConsultorio);
     this.codConsultorio = codConsultorio;
   }
+
+  filtrarProgramaciones(term:string):Observable<Programacion[]>{
+    return this.http.get<Programacion[]>(`${this.urlEndPoint}/pro-consultorio/${term}`);
+  }
+
 
 }

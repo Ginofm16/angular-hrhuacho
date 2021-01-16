@@ -1,4 +1,4 @@
-import { ProgramacionFilter } from './programacionFilter';
+import { HistoriaService } from './../../historia/historia.service';
 import { ProgramacionService } from './../../programacion/programacion.service';
 import { Usuario } from './../../personal/login/usuario';
 import { Programacion } from './../../programacion/programacion';
@@ -12,13 +12,15 @@ import { Observable } from 'rxjs';
 import { FormGroup, FormControl } from '@angular/forms';
 import { flatMap, map } from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent } from '@angular/material';
+import { ProgramacionFilter } from '../formulario/programacionFilter';
+import { Historia } from 'src/app/historia/historia';
 
 @Component({
-  selector: 'app-form-citamedica',
-  templateUrl: './form-citamedica.component.html',
-  styleUrls: ['./form-citamedica.component.css']
+  selector: 'app-form-crearcita',
+  templateUrl: './form-crearcita.component.html',
+  styleUrls: ['./form-crearcita.component.css']
 })
-export class FormCitamedicaComponent implements OnInit {
+export class FormCrearcitaComponent implements OnInit {
 
   form: FormGroup;
 
@@ -26,6 +28,7 @@ export class FormCitamedicaComponent implements OnInit {
   private newCitaMedica: CitaMedica;
   private titulo: string = "Crear Cita Medica";
   private editar: boolean=false;
+  private historia: Historia;
 
   programacionFilter: ProgramacionFilter = new ProgramacionFilter();
   codigoUsuarioParam : any;
@@ -49,6 +52,7 @@ export class FormCitamedicaComponent implements OnInit {
               private router:Router,
               private activatedRoute: ActivatedRoute,
               private citaMedicaService: CitaMedicaService,
+              private historiaService: HistoriaService,
               private programacionService: ProgramacionService) { }
 
   ngOnInit() {
@@ -120,6 +124,7 @@ export class FormCitamedicaComponent implements OnInit {
   create(): void{
     this.citaMedica.programacion = this.programacionSeleccionado;
     this.citaMedica.usuario = this.authService.usuario;
+    this.citaMedica.historia = this.historia;
     this.citaMedica.cit_estado = true;
     this.citaMedica.cit_costo_total = this.citaMedica.programacion.consultorio.con_precio - this.citaMedica.cit_exoneracion;
     console.log(this.citaMedica);
@@ -151,10 +156,11 @@ export class FormCitamedicaComponent implements OnInit {
         if(codigo){
           this.editar=true;
           console.log("CODIGO PARAM");
-          this.citaMedicaService.getCitaMedica(codigo).subscribe(
-            citaMedica => {
-              this.citaMedica = citaMedica;
-              console.log(citaMedica.cit_estado);
+          this.historiaService.getHistoria(codigo).subscribe(
+            historia => {
+              this.historia = historia;
+              console.log(historia.his_estado);
+              console.log("%%%%%%%%%")
             }
           )
         }

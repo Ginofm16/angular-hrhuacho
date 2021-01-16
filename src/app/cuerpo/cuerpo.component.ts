@@ -61,15 +61,12 @@ export class CuerpoComponent implements OnInit {
   producto?: Producto, se indica que de parametro sera opcional, puede haber o no el
   parametro Producto. Va retornar un string o tambien un indefinido*/
   mostrarNombre(historia?: Historia): string | undefined {
-    console.log('sssss');
     return historia ? historia.his_ape_paterno: undefined;
   }
 
   seleccionarHistoria(event: MatAutocompleteSelectedEvent): void {
     let nuevoItem = new Historia();
      nuevoItem = event.option.value as Historia;
-    console.log('historiaaaaaaaaaaaaa');
-    console.log(nuevoItem);
 
     if (this.existeItem(nuevoItem.his_codigo)) {
       Swal.fire(this.titulo, `Usuario ${nuevoItem.his_ape_paterno} ya fue encontrado`, 'info');
