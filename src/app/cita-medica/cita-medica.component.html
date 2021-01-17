@@ -27,7 +27,7 @@
             <tbody >
                 <tr *ngFor="let citaMedica of citaMedicaIndex" >
                     <td>{{citaMedica.cit_codigo}}</td>
-                    <td>{{citaMedica.usuario.personal.per_nombre}}</td>
+                    <td>{{citaMedica.historia.his_nombre}} {{citaMedica.historia.his_ape_paterno}} {{citaMedica.historia.his_ape_materno}}</td>
                     <!--OTRA FORMA(formato) de dar formato-->
                     <td>{{citaMedica.programacion.consultorio.con_nombre}}</td>
                     <td>{{citaMedica.programacion.pro_fecha}} {{citaMedica.programacion.pro_hora_inicio}}</td>

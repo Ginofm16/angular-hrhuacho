@@ -25,13 +25,11 @@ export class FormCrearcitaComponent implements OnInit {
   form: FormGroup;
 
   private citaMedica:CitaMedica = new CitaMedica();
-  private newCitaMedica: CitaMedica;
   private titulo: string = "Crear Cita Medica";
   private editar: boolean=false;
   private historia: Historia;
 
   programacionFilter: ProgramacionFilter = new ProgramacionFilter();
-  codigoUsuarioParam : any;
 
   private errores: string[];
   programaciones: Programacion[];
@@ -129,9 +127,11 @@ export class FormCrearcitaComponent implements OnInit {
     this.citaMedica.cit_costo_total = this.citaMedica.programacion.consultorio.con_precio - this.citaMedica.cit_exoneracion;
     console.log(this.citaMedica);
     this.citaMedicaService.create(this.citaMedica)
-    .subscribe(citaMedica => {
-      this.router.navigate(['/cita-medica'])
-      Swal.fire('Nueva CitaMedica',`La citaMedica número: ${citaMedica.cit_codigo} del usuario: ${citaMedica.usuario.personal.per_nombre}
+    .subscribe(json => {
+      console.log("CREATE::.::");
+      console.log(json);
+      this.router.navigate(['/cuerpo'])
+      Swal.fire('Nueva CitaMedica',`La citaMedica número: ${json.cit_codigo} del usuario: ${json.usuario.personal.per_nombre}
       ha sido creado con exito`,'success');
     },
       err =>{
@@ -169,13 +169,14 @@ export class FormCrearcitaComponent implements OnInit {
   }
 
   update():void{
+    
     this.citaMedicaService.update(this.citaMedica)
-    /*dentro de subscribe, se registra el observador, que seria la respuesta en este caso el cliente*/
+        /*dentro de subscribe, se registra el observador, que seria la respuesta en este caso el cliente*/
     .subscribe(json => {
       this.router.navigate(['/cita-medica'])
       /*alerta.(titulo - el mensaje, con comillas de interpolacion (``) para poder concatenar
     con una variable- creado con éxito - el tipo de mensaje)*/
-      Swal.fire('Nuevo Cita',`${json.mensaje}: ${json.citaMedica.cit_codigo}`,'success')
+      Swal.fire('Nuevo Cita',`${json.mensaje}: ${json.citaPaciente.cit_codigo}`,'success')
     },
     /*(referente a validacion del backend)como segundo parametro, seria cuando sale mal la operacion.
      err, parametro que se estaria recibiendo por argumento; asi como arriba se recibe al cliente cuando

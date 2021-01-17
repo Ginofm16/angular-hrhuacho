@@ -37,8 +37,7 @@ export class ProgramacionService {
 
 
   create(programacion: Programacion): Observable<Programacion> {
-    console.log("Create::::::::");
-    console.log(programacion);
+
     return this.http.post(this.urlEndPoint, programacion).pipe(
       map((response: any) => response.programacion as Programacion),
       catchError(e => {
@@ -73,8 +72,7 @@ export class ProgramacionService {
   }
 
   update(programacion: Programacion): Observable<any> {
-    console.log("UPDATE SERVICE ::::::::::");
-    console.log(programacion);
+
     return this.http.put<any>(`${this.urlEndPoint}/${programacion.pro_codigo}`, programacion).pipe(
       catchError(e => {
         if (e.status == 400) {
@@ -126,7 +124,6 @@ export class ProgramacionService {
   }
 
   recibirDato(codConsultorio) {
-    console.log("SSSSSSSSSSSSSEEEEEEERVVV" + codConsultorio);
     this.codConsultorio = codConsultorio;
   }
 

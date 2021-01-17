@@ -90,15 +90,12 @@ export class FormCitamedicaComponent implements OnInit {
     let nuevoItem = new Programacion();
      nuevoItem = event.option.value as Programacion;
      this.programacionSeleccionado = nuevoItem;
-     console.log("seleccionarProgramacion:::::::::");
-     console.log(this.programacionSeleccionado);
 
     if (this.existeItem(nuevoItem.pro_codigo)) {
       Swal.fire(this.titulo, `Usuario ${nuevoItem.consultorio.con_nombre} ya fue encontrado`, 'info');
     } else {
       console.log('nuevoItemsssss');
-      
-     
+    
       this.programacionFilter.items.push(nuevoItem);
 
       console.log(this.programacionFilter.items)
@@ -112,8 +109,6 @@ export class FormCitamedicaComponent implements OnInit {
   }
 
   mostrarProgramacion(programacion?: Programacion): string | undefined {
-    console.log("MOSTRAR NOMBRE");
-    console.log(programacion);
     return programacion ? programacion.consultorio.con_nombre: undefined;
   }
 
@@ -145,12 +140,9 @@ export class FormCitamedicaComponent implements OnInit {
     
         let codigo = params['id']
         
-   
-        
         //si existe el id
         if(codigo){
           this.editar=true;
-          console.log("CODIGO PARAM");
           this.citaMedicaService.getCitaMedica(codigo).subscribe(
             citaMedica => {
               this.citaMedica = citaMedica;
@@ -169,7 +161,7 @@ export class FormCitamedicaComponent implements OnInit {
       this.router.navigate(['/cita-medica'])
       /*alerta.(titulo - el mensaje, con comillas de interpolacion (``) para poder concatenar
     con una variable- creado con éxito - el tipo de mensaje)*/
-      Swal.fire('Nuevo Cita',`${json.mensaje}: ${json.citaMedica.cit_codigo}`,'success')
+      Swal.fire('Nuevo Cita',`${json.mensaje}: ${json.citaPaciente.cit_codigo}`,'success')
     },
     /*(referente a validacion del backend)como segundo parametro, seria cuando sale mal la operacion.
      err, parametro que se estaria recibiendo por argumento; asi como arriba se recibe al cliente cuando

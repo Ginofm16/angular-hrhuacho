@@ -1,0 +1,32 @@
+.abrir-modal{
+    background-color: rgba(0,0,0,0.7);
+    /*posicionar al background de forma fija tomando toda la pantalla*/
+    position: fixed;
+    /*empezara en la esquina superior izquierda, hasta cubrir con el fondo toda la pantalla*/
+    top: 0px;
+    left: 0px;
+
+    width: 100%;
+    height: 100%;
+    /*para posicionar al frente o sobre los demas elementos de nuestra pagina. Solo se puede 
+    aplicar a las clases, a lo estilos que tengan el atributo position*/
+    z-index: 1000;
+}
+
+.animacion{
+    /*funciona esto para firefox*/
+    animation-duration: 2s;
+    animation-fill-mode: both;
+    /*-webkit-, para compatibilidad con chrome y safari*/
+    -webkit-animation-duration: 2s;
+    -webkit-animation-fill-mode: both;
+}
+
+.fadeIn{
+    animation-name: fadeIn;
+    -webkit-animation-name: fadeIn;
+}
+
+/*keyframes, describe cual es el efecto de la animacion atraves de reglas */
+@keyframes fadeIn {0% {opacity: 0;}to{opacity: 1;}}
+@-webkit-keyframes fadeIn {0% {opacity: 0;}to{opacity: 1;}}

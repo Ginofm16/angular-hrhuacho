@@ -1,3 +1,4 @@
+import { ModalCrearcitaService } from './service/modal-crearcita.service';
 import { Component, OnInit } from '@angular/core';
 import { Historia } from '../historia/historia';
 import { FormControl } from '@angular/forms';
@@ -25,6 +26,7 @@ export class CuerpoComponent implements OnInit {
   historiaComp: HistoriasComponent;
   historia: Historia = new Historia();
   historiaSeleccionada: Historia;
+  historiaSeleccionadaCrearCita: Historia;
 
   autocompleteControl = new FormControl();
 
@@ -33,6 +35,7 @@ export class CuerpoComponent implements OnInit {
   constructor(private cuerpoService: CuerpoService,
               private router: Router,
               private modalService: ModalService,
+              private modalCrearcitaService: ModalCrearcitaService,
               private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
@@ -108,6 +111,12 @@ export class CuerpoComponent implements OnInit {
   abrirModal(historia: Historia){
     this.historiaSeleccionada = historia;
     this.modalService.abrirModal();
+  }
+
+  abrirModalCrear(historia: Historia){
+    
+    this.historiaSeleccionadaCrearCita = historia;
+    this.modalCrearcitaService.abrirModal();
   }
 
 }

@@ -24,10 +24,11 @@ export class DetalleComponent implements OnInit {
   public date: any;
 
 
+
   /*se inyecta el clienteService. 
   AL inyectar el ModalService, va permitir cerrar el modal bootstrap, porque el service esta conteniendo
   un atributo boolean de valor false*/
-  constructor(private clienteService: HistoriaService,
+  constructor(
     private modalService: ModalService) { }
 
   ngOnInit() {

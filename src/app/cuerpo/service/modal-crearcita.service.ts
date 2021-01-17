@@ -1,10 +1,11 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ModalService {
+export class ModalCrearcitaService {
 
+  
   modal: boolean = false;
 
   /*atributo _notificarUpload, de tipo EventEmitter<any>.
@@ -20,7 +21,7 @@ export class ModalService {
   }
 
   abrirModal(){
-    console.log("ABRIR MODAL CREr")
+    console.log("ABRIR MODAL CREAR")
     this.modal = true;
   }
 

@@ -1,4 +1,5 @@
 <detalle-historia *ngIf="historiaSeleccionada" [historia]= "historiaSeleccionada"></detalle-historia>
+<app-modal-crearcita *ngIf="historiaSeleccionadaCrearCita" [historia]= "historiaSeleccionadaCrearCita"></app-modal-crearcita>
 <!-- Content Row -->
 <div class="row">
 
@@ -9,7 +10,7 @@
 
     <div class="form-group row">
                 <div class="text-center col-md-12">
-                    <mat-form-field>
+                    <mat-form-field style="width: 350px;">
                         <input type="text" placeholder="Añadir" aria-label="Historias" matInput
                             [formControl]="autocompleteControl" [matAutocomplete]="auto">
                         <!--displayWith, atributo que permite ejecutar un metodo que mostrara el nombre del producto
@@ -19,7 +20,7 @@
                             (optionSelected)="seleccionarHistoria($event)">
                             <!--| async, se utiliza porque estamos iterando un observable en ves de un arreglo-->
                             <mat-option *ngFor="let historia of historiasFiltradas | async" [value]="historia">
-                                {{historia.his_ape_paterno}} {{historia.his_ape_materno}}
+                                {{historia.his_ape_paterno}} {{historia.his_ape_materno}} {{historia.his_nombre}}
                             </mat-option>
                         </mat-autocomplete>
                     </mat-form-field>
@@ -51,7 +52,8 @@
                                 <td>{{item.his_dni}}</td>
                                 <td>{{item.his_seguro}}</td>
                                 <td>{{item.pais.pais_nombre}}</td>
-                                <td ><button type="button" class="btn btn-success btn-sm" [routerLink]="['/cita-medica/crearform', item.his_codigo]">Crear Cita</button></td>
+                                <!--<td ><button type="button" class="btn btn-success btn-sm" [routerLink]="['/cita-medica/crearform', item.his_codigo]">Crear Cita</button></td>-->
+                                <td ><button type="button" class="btn btn-success btn-sm" (click)="abrirModalCrear(item)">Crear Cita</button></td>
                             </tr>
                         </tbody>
                     </table>

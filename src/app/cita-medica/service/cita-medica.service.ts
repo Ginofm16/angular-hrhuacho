@@ -37,10 +37,11 @@ export class CitaMedicaService {
     );
   }
 
-  create(citaMedica: CitaMedica): Observable<CitaMedica> {
+  cita : CitaMedica = new CitaMedica();
+
+  create(citaMedica: CitaMedica): Observable<any> {
 
     return this.http.post(this.urlEndPoint, citaMedica).pipe(
-      map((response: any) => response.citaMedica as CitaMedica),
       catchError(e => {
         if (e.status == 400) {
           return throwError(e);
@@ -48,6 +49,29 @@ export class CitaMedicaService {
 
         if (e.error.mensaje) {
           console.error(e.error.mensaje);
+        }
+
+        return throwError(e);
+      })
+    )
+  }
+
+  
+
+  update(citaMedica: CitaMedica): Observable<any> {
+    return this.http.put<any>(`${this.urlEndPoint}/${citaMedica.cit_codigo}`, citaMedica).pipe(
+      catchError(e => {
+        if (e.status == 400) {
+          return throwError(e);
+        }
+
+        if (e.error.mensaje) {
+          console.error(e.error.mensaje);
+          Swal.fire(
+            e.error.mensaje,
+            e.error.error,
+            'error'
+          );
         }
 
         return throwError(e);
@@ -70,28 +94,6 @@ export class CitaMedicaService {
         return throwError(e);
       })
     );
-  }
-
-  update(citaMedica: CitaMedica): Observable<any> {
-    console.log(citaMedica);
-    return this.http.put<any>(`${this.urlEndPoint}/${citaMedica.cit_codigo}`, citaMedica).pipe(
-      catchError(e => {
-        if (e.status == 400) {
-          return throwError(e);
-        }
-
-        if (e.error.mensaje) {
-          console.error(e.error.mensaje);
-          Swal.fire(
-            e.error.mensaje,
-            e.error.error,
-            'error'
-          );
-        }
-
-        return throwError(e);
-      })
-    )
   }
 
   delete(codigo: number): Observable<CitaMedica> {
