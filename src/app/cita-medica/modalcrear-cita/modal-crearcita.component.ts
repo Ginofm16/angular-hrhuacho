@@ -30,6 +30,7 @@ export class ModalCrearcitaComponent implements OnInit {
   private newCitaMedica: CitaMedica;
   private titulo: string = "Crear Cita Medica";
   private editar: boolean=false;
+  private testVisible: boolean=true;
 
   programacionFilter: ProgramacionFilter = new ProgramacionFilter();
   codigoUsuarioParam : any;
@@ -85,6 +86,9 @@ export class ModalCrearcitaComponent implements OnInit {
   seleccionarProgramacion(event: MatAutocompleteSelectedEvent): void {
     let nuevoItem = new Programacion();
      nuevoItem = event.option.value as Programacion;
+     console.log("Pre nuevoItem");
+     console.log(nuevoItem);
+     console.log("Post nuevoItem");
      this.programacionSeleccionado = nuevoItem;
 
     if (this.existeItem(nuevoItem.pro_codigo)) {

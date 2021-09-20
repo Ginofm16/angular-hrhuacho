@@ -30,7 +30,7 @@ export class FormprogramacionComponent implements OnInit {
     private programacionService: ProgramacionService) { }
 
   ngOnInit() {
-    console.log(this.authService.usuario.usu_codigo);
+    console.log("ngOnInit::::usuario:::"+this.authService.usuario.usu_codigo);
     this.cargarProgramacion();
     this.programacionService.getConsultorios().subscribe(consultorios => this.consultorios = consultorios);
 
@@ -106,6 +106,12 @@ export class FormprogramacionComponent implements OnInit {
       }
 
     )
+  }
+
+  onSelect(code: any): void {
+    console.log(":::::onSelect::::::");
+    let consultorio = code.target.value;
+    console.log("::::-"+consultorio+"-:::::");
   }
 
   compararConsultorio(p1: Consultorio, p2:Consultorio): boolean{
