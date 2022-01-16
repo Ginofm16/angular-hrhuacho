@@ -17,8 +17,9 @@ import { registerLocaleData } from '@angular/common';
 import localeES from '@angular/common/locales/es';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatDatepickerModule, MatButtonModule, MatRadioModule } from '@angular/material';
-
+import { MatDatepickerModule} from '@angular/material/datepicker';
+import { MatButtonModule } from'@angular/material/button';
+import { MatRadioModule } from '@angular/material/radio';
 
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { HistoriaService } from './historia/historia.service';

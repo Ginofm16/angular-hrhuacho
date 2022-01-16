@@ -12,7 +12,7 @@ import { CitaMedicaService } from '../service/cita-medica.service';
 import { HistoriaService } from 'src/app/historia/historia.service';
 import { ProgramacionService } from 'src/app/programacion/programacion.service';
 import { flatMap, map } from 'rxjs/operators';
-import { MatAutocompleteSelectedEvent } from '@angular/material';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import Swal from 'sweetalert2';
 
 @Component({

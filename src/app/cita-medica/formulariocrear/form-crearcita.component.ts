@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
 import { Observable } from 'rxjs';
 import { FormGroup, FormControl } from '@angular/forms';
 import { flatMap, map } from 'rxjs/operators';
-import { MatAutocompleteSelectedEvent } from '@angular/material';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { ProgramacionFilter } from '../formulario/programacionFilter';
 import { Historia } from 'src/app/historia/historia';
 
