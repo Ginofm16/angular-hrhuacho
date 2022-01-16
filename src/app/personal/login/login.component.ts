@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
   usuario:Usuario;
 
   ver:boolean;
-  titulo: string = 'Por favor Sign In!';
+  titulo: string = 'Por favor Inicie Sesión!';
 
   constructor(private authService: AuthService, private router: Router) { 
     this.personal= new Personal();
