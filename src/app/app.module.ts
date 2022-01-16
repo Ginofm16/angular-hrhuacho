@@ -17,9 +17,8 @@ import { registerLocaleData } from '@angular/common';
 import localeES from '@angular/common/locales/es';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatDatepickerModule} from '@angular/material/datepicker';
-import { MatButtonModule } from'@angular/material/button';
-import { MatRadioModule } from '@angular/material/radio';
+import { MatDatepickerModule, MatButtonModule, MatRadioModule } from '@angular/material';
+
 
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { HistoriaService } from './historia/historia.service';
@@ -100,7 +99,7 @@ const routes: Routes = [
     BrowserModule,
     HttpClientModule,
     FormsModule,
-    RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' }),
+    RouterModule.forRoot(routes),
     BrowserAnimationsModule, MatDatepickerModule, MatMomentDateModule,
     MatButtonModule,
     MatRadioModule,
