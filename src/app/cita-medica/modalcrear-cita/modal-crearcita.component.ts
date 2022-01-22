@@ -91,6 +91,8 @@ export class ModalCrearcitaComponent implements OnInit {
      console.log("Post nuevoItem");
      this.programacionSeleccionado = nuevoItem;
 
+
+
     if (this.existeItem(nuevoItem.pro_codigo)) {
       Swal.fire(this.titulo, `Usuario ${nuevoItem.consultorio.con_nombre} ya fue encontrado`, 'info');
     } else {
@@ -121,10 +123,9 @@ export class ModalCrearcitaComponent implements OnInit {
     this.citaMedica.cit_costo_total = this.citaMedica.programacion.consultorio.con_precio - this.citaMedica.cit_exoneracion;
     this.citaMedicaService.create(this.citaMedica)
     .subscribe(json => {
-      this.router.navigate(['/cuerpo'])
       Swal.fire('Nueva CitaMedica',`La citaMedica número: ${json.citaPaciente.cit_codigo} para: ${json.citaPaciente.historia.his_nombre}
       ha sido creado con exito`,'success');
-      this.cerrarModal();
+      
     },
       err =>{
         this.errores = err.error.errors as string[];
@@ -132,10 +133,21 @@ export class ModalCrearcitaComponent implements OnInit {
         console.error(err.error.errors);
       }
     )
+    console.log('pre cerrarModal');
+    this.cerrarModal();
+    console.log('pre navigate');
+    this.router.navigate(['/']);
+    console.log('post navigate');
+  }
+
+  limpiar(){
+    this.programacionSeleccionado = null;
+    this.myControlProgramacion.reset();
   }
 
   cerrarModal(){
     this.modalCrearcitaService.cerrarModal();
+    
   }
 
 }

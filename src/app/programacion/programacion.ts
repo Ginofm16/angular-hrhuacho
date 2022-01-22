@@ -8,7 +8,8 @@ export class Programacion{
     pro_fecha: string;
     pro_hora_inicio:string;
     pro_num_turno:number;
-    usuario:Usuario = new Usuario();
+    usuario:Usuario;
     consultorio:Consultorio;
     pro_estado:Boolean;
+    usuario_medico:Usuario;
 }

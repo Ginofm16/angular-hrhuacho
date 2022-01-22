@@ -36,9 +36,12 @@ export class CuerpoComponent implements OnInit {
               private router: Router,
               private modalService: ModalService,
               private modalCrearcitaService: ModalCrearcitaService,
-              private activatedRoute: ActivatedRoute) { }
+              private activatedRoute: ActivatedRoute) {
+                console.log('::::constructor:::');
+               }
 
   ngOnInit() {
+    console.log('::::ngOnInit:::');
 
     this.historiasFiltradas = this.autocompleteControl.valueChanges
       .pipe(

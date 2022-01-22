@@ -13,7 +13,7 @@
           <div class="modal-body">
             <div class="container">
               
-              <form #citaMedicaForm="ngForm" class="container">
+              <form #citaMedicaForm="ngForm" class="container" >
 
                 <div class="row">
                     <div class="col-sm-4 col-md-3 justify-content-end">
@@ -49,6 +49,8 @@
                     <div class="col-sm-2 pl-0 col-md-2">{{programacionSeleccionado.consultorio.con_precio}}</div>
                     <div class="col-form-label-sm col-sm-4 col-md-3">Programación</div>
                     <div class="col-sm-8 pl-0 col-md-9">{{programacionSeleccionado.pro_fecha}} {{programacionSeleccionado.pro_hora_inicio}}</div>
+                    <div class="col-form-label-sm col-sm-4 col-md-3">Medico</div>
+                    <div class="col-sm-8 pl-0 col-md-9">{{programacionSeleccionado.usuario_medico.personal.per_nombre}} {{programacionSeleccionado.usuario_medico.personal.per_ape_paterno}} {{programacionSeleccionado.usuario_medico.personal.per_ape_materno}}</div>
                 </div>
                 <div class="form-group row mb-1">
                     <label for="cit_exoneracion" class="col-form-label-sm col-sm-4 col-md-3">Cantidad
@@ -57,7 +59,7 @@
                         <input type="text" class="form-control form-control-sm mb-0"
                             [(ngModel)]="citaMedica.cit_exoneracion" name="cit_exoneracion"
                             #cit_exoneracion="ngModel" required minlength="1"
-                            pattern="^[0-9]+([,][0-9]+)?$">
+                            pattern="^[0-9]+([.][0-9]+)?$">
                         <div class="alert alert-danger my-1 py-1"
                             *ngIf="cit_exoneracion.invalid && (cit_exoneracion.dirty || cit_exoneracion.touched)">
                             <div *ngIf="cit_exoneracion.errors.required">
@@ -80,6 +82,9 @@
                             *ngIf="!citaMedica.cit_codigo else elseBlock"
                             [disabled]="!citaMedicaForm.form.valid">Crear</button>
                
+                    </div>
+                    <div class="col-sm-6">
+                        <button class="btn btn-danger" role="button" (click)='limpiar()'>Limpiar</button>
                     </div>
                 </div>
 
