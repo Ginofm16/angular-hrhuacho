@@ -1,0 +1,265 @@
+
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+            <div class="page-wrapper">
+                <div class="page-body">
+                    <div class="row">
+                        <!--start-->
+                        <div class="card bg-dark text-white mx-auto" style="width: 70%">
+                            <div class="card-header bg-primary">{{titulo}}</div>
+                            <div class="card-body">
+                                <form #personalForm="ngForm" class="container px-0">
+                                    <div class="row">
+                                        <div class="form-group col-md-4" style="padding-right: 0px;">
+                                            <label for="per_nombre"
+                                                class="col-form-label-sm col-md-12 mb-0" style="margin-left: -10px; padding-right: 0px;">Nombres</label>
+                                            <div class="col-md-12" style="margin-left: -10px; padding-right: 0px; ">
+
+                                                <!--#nombre, es una variable local, y a esa variable se le asignara un objeto ngModel, sera este
+            objeto quien contenga los mensajes de error-->
+                                                <!--required minlength="4"-->
+                                                <input type="text" class="form-control form-control-sm mb-0"
+                                                    [(ngModel)]="personal.per_nombre" name="per_nombre"
+                                                    #per_nombre="ngModel" required>
+
+                                                <div class="alert alert-danger my-1 py-1"
+                                                    *ngIf="per_nombre.invalid && (per_nombre.dirty || per_nombre.touched)">
+                                                    <div *ngIf="per_nombre.errors.required">
+                                                        <!--aca se muestra el mensaje de error solo para el Required-->
+                                                        Nombre es requerido
+                                                    </div>
+                                                    <div *ngIf="per_nombre.errors.minlength">
+                                                        Nombre debe tener al menos 4 caracteres
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-3" style="padding-right: 0px;">
+                                            <label for="per_ape_paterno" class="col-form-label-sm col-md-12 mb-0" 
+                                            style="margin-left: -15px; padding-right: 0px;">Apellido Paterno</label>
+                                            <div class="col-md-12" style="margin-left: -15px; padding-right: 0px;">
+                                                <!--required-->
+                                                <input type="text" class="form-control form-control-sm mb-0"
+                                                    [(ngModel)]="personal.per_ape_paterno" name="per_ape_paterno"
+                                                    #per_ape_paterno="ngModel" required>
+                                                <div class="alert alert-danger my-1 py-1"
+                                                    *ngIf="per_ape_paterno.invalid && (per_ape_paterno.dirty || per_ape_paterno.touched)">
+                                                    <div *ngIf="per_ape_paterno.errors.required">
+                                                        <!--aca se muestra el mensaje de error solo para el Required-->
+                                                        Apellido Paterno es requerido
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group col-md-3" style="padding-right: 0px;">
+                                            <!--col-sm-2, del total de 12 columnas que exite va ocupar 2-->
+                                            <label for="per_ape_materno" class="col-form-label-sm col-md-12 mb-0" style="margin-left: -20px; padding-right: 0px;">Apellido
+                                                Materno</label>
+                                            <div class="col-md-12" style="margin-left: -20px; padding-right: 0px;">
+                                                <!--required-->
+                                                <input type="text" class="form-control form-control-sm mb-0"
+                                                    [(ngModel)]="personal.per_ape_materno" name="per_ape_materno"
+                                                    #per_ape_materno="ngModel" required> 
+                                                <div class="alert alert-danger my-1 py-1"
+                                                    *ngIf="per_ape_materno.invalid && (per_ape_materno.dirty || per_ape_materno.touched)">
+                                                    <div *ngIf="per_ape_materno.errors.required">
+                                                        <!--aca se muestra el mensaje de error solo para el Required-->
+                                                        Apellido Materno es requerido
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+
+                                        <div class="form-group col-md-3 mb-1">
+                                            <!--col-sm-2, del total de 12 columnas que exite va ocupar 3-->
+                                            <label for="per_pais" class="col-form-label-sm col-md-12 mb-0" style="margin-left: -10px; padding-right: 0px;">Pais</label>
+                                            <div class="col-md-12 pl-0 mb-0" >
+                        
+                                              <select [compareWith]="compararPais" class="form-control-sm " [(ngModel)]="personal.pais" name="per_pais">
+                                                <!--undefined, no esta definido, es como si fuera un null, pero en typescript se maneja como undefined-->
+                                                <option [ngValue]="undefined">Seleccionar Pais</option>
+                                                <option *ngFor="let pais of paises" [ngValue]="pais">{{pais.pais_nombre}}</option>
+                                              </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-4 mb-1 pl-0 ml-0">
+                                            <!--col-sm-2, del total de 12 columnas que exite va ocupar 3-->
+                                            <label for="per_documento" class="col-form-label-sm col-md-12 mb-0 ms-0 pl-0" 
+                                            style="padding-right: 0px; margin-left: -10px;">Tipo Documento</label>
+                                            <div class="col-md-12 mb-0 ms-0 pl-0" style="margin-left: -10px;">
+                        
+                                              <select [compareWith]="compararTipoDocumento" class="form-control-sm" [(ngModel)]="personal.tipo_documento" name="per_tipo_documento">
+                                                <!--undefined, no esta definido, es como si fuera un null, pero en typescript se maneja como undefined-->
+                                                <option [ngValue]="undefined">Seleccionar Documento</option>
+                                                <option *ngFor="let tipo_documento of tipoDocumentos" [ngValue]="tipo_documento">{{tipo_documento.doc_nombre}}</option>
+                                              </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-2" style="padding-right: 0px;">
+                                            <!--col-sm-2, del total de 12 columnas que exite va ocupar 2-->
+                                            <label for="per_documento" class="col-form-label-sm col-md-12 mb-0 pl-0"  style="padding-right: 0px;">N° Documento</label>
+                                            <div class="col-md-12 pl-0"  style="padding-right: 0px;">
+                                                <!--required-->
+                                                <input type="text" class="form-control form-control-sm mb-0"
+                                                    [(ngModel)]="personal.per_documento" name="per_documento"
+                                                    #per_documento="ngModel" required>
+                                                <div class="alert alert-danger my-1 py-1"
+                                                    *ngIf="per_documento.invalid && (per_documento.dirty || per_documento.touched)">
+                                                    <div *ngIf="per_documento.errors.required">
+                                                        <!--aca se muestra el mensaje de error solo para el Required-->
+                                                        El Numero de documento es requerido
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-md-6" style="padding-right: 0px;">
+                                            <!--col-sm-2, del total de 12 columnas que exite va ocupar 2-->
+                                            <label for="per_direccion" class="col-form-label-sm col-md-12 mb-0 pl-0"  style="padding-right: 0px;">Dirección</label>
+                                            <div class="col-md-12 pl-0"  style="padding-right: 0px;">
+                                                <!--required-->
+                                                <input type="text" class="form-control form-control-sm mb-0"
+                                                    [(ngModel)]="personal.per_direccion" name="per_direccion"
+                                                    #per_direccion="ngModel" required>
+                                                <div class="alert alert-danger my-1 py-1"
+                                                    *ngIf="per_direccion.invalid && (per_direccion.dirty || per_direccion.touched)">
+                                                    <div *ngIf="per_direccion.errors.required">
+                                                        <!--aca se muestra el mensaje de error solo para el Required-->
+                                                        Dirección requerido
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-3" style="padding-right: 0px;">
+                                            <label for="per_fec_ingreso" class="col-form-label-sm col-md-12 mb-0 pl-0">Fecha Ingreso</label>
+                                            <div class="col-md-12 pl-0">
+                                              <!--required-->
+                                              <input [(ngModel)]="personal.per_fec_ingreso" name="per_fec_ingreso" type="date" id="date" >
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-3 pl-0" style="padding-right: 0px;">
+                                            <label for="per_fec_salida pl-0" class="col-form-label-sm col-md-12 mb-0 pl-0">Fecha Salida</label>
+                                            <div class="col-md-12 pl-0">
+                                              <!--required-->
+                                              <input [(ngModel)]="personal.per_fec_salida" name="per_fec_salida" type="date" id="date" >
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-md-6" style="padding-right: 0px;">
+                                            <!--col-sm-2, del total de 12 columnas que exite va ocupar 2-->
+                                            <label for="per_correo" class="col-form-label-sm col-md-12 mb-0 pl-0"  style="padding-right: 0px;">Correo</label>
+                                            <div class="col-md-12 pl-0"  style="padding-right: 0px;">
+                                                <!--required-->
+                                                <input type="text" class="form-control form-control-sm mb-0"
+                                                    [(ngModel)]="personal.per_correo" name="per_correo"
+                                                    #per_correo="ngModel" required>
+                                                <div class="alert alert-danger my-1 py-1"
+                                                    *ngIf="per_correo.invalid && (per_correo.dirty || per_correo.touched)">
+                                                    <div *ngIf="per_correo.errors.required">
+                                                        <!--aca se muestra el mensaje de error solo para el Required-->
+                                                        Correo electronico requerido
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group col-md-3" style="padding-right: 0px;">
+                                            <!--col-sm-2, del total de 12 columnas que exite va ocupar 2-->
+                                            <label for="per_telefono" class="col-form-label-sm col-md-12 mb-0 pl-1"  style="margin-left: -3px; padding-right: 0px;">Telefono</label>
+                                            <div class="col-md-12 pl-1"  style="margin-left: -3px; padding-right: 0px;">
+                                                <!--required-->
+                                                <input type="text" class="form-control form-control-sm mb-0"
+                                                    [(ngModel)]="personal.per_telefono" name="per_telefono"
+                                                    #per_telefono="ngModel" required>
+                                                <div class="alert alert-danger my-1 py-1"
+                                                    *ngIf="per_telefono.invalid && (per_telefono.dirty || per_telefono.touched)">
+                                                    <div *ngIf="per_telefono.errors.required">
+                                                        <!--aca se muestra el mensaje de error solo para el Required-->
+                                                        El telefono es requerido
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-md-3 mb-1 pl-0">
+                                            <!--col-sm-2, del total de 12 columnas que exite va ocupar 3-->
+                                            <label for="per_categoria" class="col-form-label-sm col-md-12 mb-0 ms-0" style="padding-right: 0px;">Categoria</label>
+                                            <div class="col-md-12 mb-0 ms-0">
+                        
+                                              <select [compareWith]="compararCategoria" class="form-control-sm " [(ngModel)]="personal.categoria" name="per_categoria">
+                                                <!--undefined, no esta definido, es como si fuera un null, pero en typescript se maneja como undefined-->
+                                                <option [ngValue]="undefined">Seleccionar Categoria</option>
+                                                <option *ngFor="let categoria of categorias" [ngValue]="categoria">{{categoria.cat_nombre}}</option>
+                                              </select>
+                        
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-3 mb-1">
+                                            <!--col-sm-2, del total de 12 columnas que exite va ocupar 3-->
+                                            <label for="per_especialidad" class="col-form-label-sm col-md-12 mb-0 ms-0 pl-0" style="padding-right: 0px;">Especialidad</label>
+                                            <div class="col-md-12 mb-0 ms-0 pl-0">
+                        
+                                              <select [compareWith]="compararEspecialidad" class="form-control-sm " [(ngModel)]="personal.especialidad" name="per_especialidad">
+                                                <!--undefined, no esta definido, es como si fuera un null, pero en typescript se maneja como undefined-->
+                                                <option [ngValue]="undefined">Seleccionar Especialidad</option>
+                                                <option *ngFor="let especialidad of especialidades" [ngValue]="especialidad">{{especialidad.esp_nombre}}</option>
+                                              </select>
+                        
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-3" style="padding-right: 0px;">
+                                            <!--col-sm-2, del total de 12 columnas que exite va ocupar 2-->
+                                            <label for=" per_rne" class="col-form-label-sm col-md-12 mb-0 w-75 ml-3" style="padding-right: 0px;">RNE</label>
+                                            <div class="col-md-12 w-75 ml-2"  style="padding-right: 0px;">
+                                                <!--required-->
+                                                <input type="text" class="form-control form-control-sm ml-2 mb-0"
+                                                    [(ngModel)]="personal.per_rne" name="per_rne">
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+
+                                    <div class="form-group row mb-1">
+                                        <div class="col-sm-6">
+                                          <!--Este era para trabajar con ngSumbit, que se habia puesta en la etiqueta form
+                                <button class="btn btn-primary" role="button">Crear</button>-->
+                                          <!--ngIf, si el codigo dela Historia no existe se va mostrar el boton crear. else, sino
+                              utlizaremos un template para colocar el boton actualizar; la etiqueta elseBlock para Crear el
+                            template-->
+                                          <!--trabajando validacion, teniendo como partida el ngFor (puesto en la etiqueta de form)
+                                !personalForm.form.valid, va retornar true o false; (pero  "!" lo negara)-->
+                                          <button class="btn btn-primary" role="button" (click)='create()'
+                                            *ngIf="!personal.per_codigo else elseBlock" [disabled]="!personalForm.form.valid">Crear</button>
+                                          <ng-template #elseBlock>
+                                            <button class="btn btn-primary" role="button" (click)='update()'
+                                              [disabled]="!personalForm.form.valid">Actualizar</button>
+                                          </ng-template>
+                                        </div>
+                                      </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="styleSelector">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
