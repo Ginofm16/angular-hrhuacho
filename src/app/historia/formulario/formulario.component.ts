@@ -1,3 +1,5 @@
+import { TipoDocumentoService } from './../../tipo-documento/tipo-documento.service';
+import { TipoDocumento } from './../../tipo-documento/tipoDocumento';
 import { EstudioService } from './../../estudio/estudio.service';
 import { Component, OnInit } from '@angular/core';
 import { Historia } from '../historia';
@@ -27,18 +29,20 @@ export class FormularioComponent implements OnInit {
   paises: Pais[];
   paisSeleccionado: Pais[];
   estudios: Estudio[];
+  tipoDocumentos: TipoDocumento[];
 
   constructor(private historiaService: HistoriaService,
               private router:Router,
               private activatedRoute: ActivatedRoute,
-              private estudioService: EstudioService) { }
+              private estudioService: EstudioService,
+              private tipoDocumentoService: TipoDocumentoService) { }
 
   ngOnInit() {
 
     this.cargarHistoria();
     this.historiaService.getPaises().subscribe(paises => this.paises = paises);
     this.estudioService.getEstudiosIndex().subscribe(estudios => this.estudios = estudios);
-
+    this.tipoDocumentoService.getTipoDocumentoIndex().subscribe(tipoDocumentos => this.tipoDocumentos = tipoDocumentos);
   }
 
   seguros = [
@@ -145,5 +149,11 @@ export class FormularioComponent implements OnInit {
     return p1==null || p2==null || p1== undefined || p2== undefined ? false: p1.est_codigo == p2.est_codigo;
   }
 
+  compararTipoDocumento(d1: TipoDocumento, d2:TipoDocumento): boolean {
+    if(d1 == undefined && d2 == undefined){
+      return true;
+    }
+    return d1==null || d2==null || d1== undefined || d2== undefined ? false: d1.doc_codigo == d2.doc_codigo; 
+  }
 
 }

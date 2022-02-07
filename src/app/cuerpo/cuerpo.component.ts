@@ -42,6 +42,7 @@ export class CuerpoComponent implements OnInit {
 
   ngOnInit() {
     console.log('::::ngOnInit:::');
+    this.cuerpo.items = [];
 
     this.historiasFiltradas = this.autocompleteControl.valueChanges
       .pipe(
@@ -54,7 +55,9 @@ export class CuerpoComponent implements OnInit {
         flatMap(value => value ? this._filter(value) : [])
       );
 
-      
+      this.modalCrearcitaService.notificarRegistro.subscribe(citaMedica => {
+        this.cuerpo.items = [];
+      })
   }
 
   private _filter(value: string): Observable<Historia[]> {

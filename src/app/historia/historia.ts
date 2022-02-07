@@ -1,3 +1,4 @@
+import { TipoDocumento } from '../tipo-documento/tipoDocumento';
 import { Estudio } from './../estudio/estudio';
 import {Pais} from './pais';
 
@@ -7,7 +8,7 @@ export class Historia {
     his_nombre: string;
     his_ape_paterno: string;
     his_ape_materno: string;
-    his_dni: string;
+    his_documento: string;
     his_direccion: string;
     his_fec_nacimiento: string;
     his_seguro: string;
@@ -15,4 +16,5 @@ export class Historia {
     estudio: Estudio;
     his_estado: boolean;
     pais:Pais;
+    tipo_documento: TipoDocumento;
 }

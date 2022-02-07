@@ -40,6 +40,7 @@
                                 <th>Seguro</th>
                                 <th>Pais</th>
                                 <th >Asignar Cita</th>
+                                <th>Eliminar</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -54,6 +55,7 @@
                                 <td>{{item.pais.pais_nombre}}</td>
                                 <!--<td ><button type="button" class="btn btn-success btn-sm" [routerLink]="['/cita-medica/crearform', item.his_codigo]">Crear Cita</button></td>-->
                                 <td ><button type="button" class="btn btn-success btn-sm" (click)="abrirModalCrear(item)">Crear Cita</button></td>
+                                <td><button class="btn btn-danger btn-sm" (click)="eliminarItemHistoria(item.his_codigo)">X</button></td>
                             </tr>
                         </tbody>
                     </table>

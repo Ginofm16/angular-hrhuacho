@@ -99,7 +99,7 @@ export class AuthService {
     this._personal.per_nombre = payload.nombre;
     this._personal.per_ape_paterno = payload.apellido_paterno;
     this._personal.per_ape_materno = payload.apellido_materno;
-    this._personal.per_dni = payload.dni;
+    this._personal.per_documento = payload.documento;
     this._personal.username = payload.user_name;
     this._personal.roles = payload.authorities;
 

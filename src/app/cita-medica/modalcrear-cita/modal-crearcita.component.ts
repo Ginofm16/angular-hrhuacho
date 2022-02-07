@@ -115,39 +115,50 @@ export class ModalCrearcitaComponent implements OnInit {
     return programacion ? programacion.consultorio.con_nombre +" "+programacion.pro_fecha: undefined;
   }
 
-  create(): void{
-    this.citaMedica.programacion = this.programacionSeleccionado;
-    this.citaMedica.usuario = this.authService.usuario;
-    this.citaMedica.historia = this.historia;
-    this.citaMedica.cit_estado = true;
-    this.citaMedica.cit_costo_total = this.citaMedica.programacion.consultorio.con_precio - this.citaMedica.cit_exoneracion;
-    this.citaMedicaService.create(this.citaMedica)
-    .subscribe(json => {
-      Swal.fire('Nueva CitaMedica',`La citaMedica número: ${json.citaPaciente.cit_codigo} para: ${json.citaPaciente.historia.his_nombre}
-      ha sido creado con exito`,'success');
-      
-    },
-      err =>{
-        this.errores = err.error.errors as string[];
-        console.error('Código del error desde el backend' + err.status);
-        console.error(err.error.errors);
-      }
-    )
-    console.log('pre cerrarModal');
-    this.cerrarModal();
-    console.log('pre navigate');
-    this.router.navigate(['/']);
-    console.log('post navigate');
+  create(num_turno: number): void{
+    console.log("create_::::::::::::");
+    console.log(num_turno);
+    if (num_turno === 0){
+      console.log("::::::::: 0 ::::::::")
+      Swal.fire( `No hay turno disponible para ${this.programacionSeleccionado.consultorio.con_nombre}`);
+    }else {
+      this.citaMedica.programacion = this.programacionSeleccionado;
+      this.citaMedica.usuario = this.authService.usuario;
+      this.citaMedica.historia = this.historia;
+      this.citaMedica.cit_estado = true;
+      this.citaMedica.cit_costo_total = this.citaMedica.programacion.consultorio.con_precio - this.citaMedica.cit_exoneracion;
+      this.citaMedicaService.create(this.citaMedica)
+      .subscribe(json => {
+
+        this.modalCrearcitaService.notificarRegistro.emit(this.citaMedica);
+
+        Swal.fire('Nueva CitaMedica',`La citaMedica número: ${json.citaPaciente.cit_codigo} para: ${json.citaPaciente.historia.his_nombre}
+        ha sido creado con exito`,'success');
+        
+      },
+        err =>{
+          this.errores = err.error.errors as string[];
+          console.error('Código del error desde el backend' + err.status);
+          console.error(err.error.errors);
+        }
+      )
+      this.cerrarModal();
+      console.log('pre navigate');
+      this.router.navigate(['/cuerpo']);
+    }
+    
   }
 
   limpiar(){
     this.programacionSeleccionado = null;
     this.myControlProgramacion.reset();
+    
   }
 
   cerrarModal(){
     this.modalCrearcitaService.cerrarModal();
-    
+    this.programacionSeleccionado = null;
+    this.myControlProgramacion.reset();
   }
 
 }

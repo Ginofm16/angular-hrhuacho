@@ -72,21 +72,31 @@
                   </div>
 
                   <div class="form-group row mb-1">
-                    <label for="his_dni" class="col-form-label-sm col-sm-4">DNI</label>
+                    <!--col-sm-2, del total de 12 columnas que exite va ocupar 2-->
+                    <label for="tipoDocumento" class="col-form-label-sm col-sm-4">Tipo Documento</label>
+                    <div class="col-sm-6 pl-0 mb-0">
+                      <select [compareWith]="compararTipoDocumento" class="form-control-sm" [(ngModel)]="historia.tipo_documento" name="tipoDocumento" >
+                        <!--undefined, no esta definido, es como si fuera un null, pero en typescript se maneja como undefined-->
+                        <option [ngValue]="undefined">--- Tipo Documento ---</option>
+                        <option *ngFor="let tipoDocumento of tipoDocumentos" [ngValue]="tipoDocumento">{{tipoDocumento.doc_nombre}}</option>
+                      </select>
+
+                    </div>
+                  </div>
+
+                  <div class="form-group row mb-1">
+                    <label for="his_documento" class="col-form-label-sm col-sm-4">Documento</label>
                     <div class="col-sm-8 pl-0">
-                      <input type="text" class="form-control form-control-sm mb-0" [(ngModel)]="historia.his_dni" name="his_dni"
-                        #his_dni="ngModel" required minlength="8" maxlength="8">
+                      <input type="text" class="form-control form-control-sm mb-0" [(ngModel)]="historia.his_documento" name="his_documento"
+                        #his_documento="ngModel" required minlength="8" maxlength="8">
                       <div class="alert alert-danger my-1 py-1"
-                        *ngIf="his_dni.invalid && (his_dni.dirty || his_dni.touched)">
-                        <div *ngIf="his_dni.errors.required">
+                        *ngIf="his_documento.invalid && (his_documento.dirty || his_documento.touched)">
+                        <div *ngIf="his_documento.errors.required">
                           <!--aca se muestra el mensaje de error solo para el Required-->
-                          DNI es requerido
+                          N° Documento es requerido
                         </div>
-                        <div *ngIf="his_dni.errors.minlength">
-                          DNI debe tener al menos 8 caracteres
-                        </div>
-                        <div *ngIf="his_dni.errors.maxlength">
-                          DNI no debe tener más de 8 caracteres
+                        <div *ngIf="his_documento.errors.minlength">
+                          N° Documento debe tener al menos 8 caracteres
                         </div>
                       </div>
                     </div>
@@ -107,20 +117,6 @@
                       </div>
                     </div>
                   </div>
-
-                  <div class="form-group row mb-1">
-                    <label for="his_direccion" class="col-form-label-sm col-md-4">Hora Prueba</label>
-                    <div class="col-md-8 pl-0">
-                      <!--required-->
-                   
-                      <input type="time" name="hora" min="18:00"
-                                 max="24:00" >
-                    
-                    </div>
-                  </div>
-
-                  
-
                   <div class="form-group row mb-1" [class.has-error]="his_seguro.touched && his_seguro.invalid">
                     <label for="his_seguro" class="col-form-label-sm col-sm-4">Seguro</label>
                     <div class="col-sm-8 pl-0 form-control-sm mb-0">
@@ -166,7 +162,7 @@
           
                   <!--FEcha-->
                   <div class="form-group row mb-1">
-                    <label for="his_direccion" class="col-form-label-sm col-md-4">Fecha Prueba</label>
+                    <label for="his_direccion" class="col-form-label-sm col-md-4">Fecha Nacimiento</label>
                     <div class="col-md-8 pl-0">
                       <!--required-->
                       <input [(ngModel)]="historia.his_fec_nacimiento" name="his_fec_nacimiento" type="date" id="date" >

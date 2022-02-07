@@ -51,7 +51,6 @@ export class HistoriasComponent implements OnInit, OnDestroy {
       this.historiasIndex = data;
     });
 
-
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 5

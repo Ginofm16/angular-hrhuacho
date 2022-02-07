@@ -14,11 +14,19 @@
             <div class="container">
               
               <form #citaMedicaForm="ngForm" class="container" >
+                <div class="row mb-3">
+                    <div class="class col-md-2">Paciente</div>
+                    <div class="class col-md-6">{{historia.his_nombre}} {{historia.his_ape_paterno}} {{historia.his_ape_materno}}</div>
+                    <div class="class col-md-2">N° Historia</div>
+                    <div class="class col-md-2">{{historia.his_codigo}}</div>
+                    <div class="class col-md-3">N° Documento</div>
+                    <div class="class col-md-3">{{historia.his_documento}}</div>
+                    <div class="class col-md-2">Tipo Seguro</div>
+                    <div class="class col-md-3">{{historia.his_seguro}}</div>
+                </div>
 
                 <div class="row">
-                    <div class="col-sm-4 col-md-3 justify-content-end">
-
-                    </div>
+            
                     <div class="col-sm-8 col-md-9 justify-content-end">
                         <mat-form-field class="container-mat-form" style="width: 300px;">
                             <input type="text" placeholder="programacion" aria-label="Programacion"
@@ -48,11 +56,13 @@
                     <div class="col-form-label-sm col-sm-2 col-md-2">Costo</div>
                     <div class="col-sm-2 pl-0 col-md-2">{{programacionSeleccionado.consultorio.con_precio}}</div>
                     <div class="col-form-label-sm col-sm-4 col-md-3">Programación</div>
-                    <div class="col-sm-8 pl-0 col-md-9">{{programacionSeleccionado.pro_fecha}} {{programacionSeleccionado.pro_hora_inicio}}</div>
+                    <div class="col-sm-8 pl-0 col-md-5">{{programacionSeleccionado.pro_fecha}} {{programacionSeleccionado.pro_hora_inicio}}</div>
+                    <div class="col-form-label-sm col-sm-2 col-md-2">N° Turnos</div>
+                    <div class="col-sm-2 pl-0 col-md-2">{{programacionSeleccionado.pro_num_turno}}</div>
                     <div class="col-form-label-sm col-sm-4 col-md-3">Medico</div>
                     <div class="col-sm-8 pl-0 col-md-9">{{programacionSeleccionado.usuario_medico.personal.per_nombre}} {{programacionSeleccionado.usuario_medico.personal.per_ape_paterno}} {{programacionSeleccionado.usuario_medico.personal.per_ape_materno}}</div>
                 </div>
-                <div class="form-group row mb-1">
+                <div class="form-group row mb-1" *ngIf="historia.his_seguro === 'particular'">
                     <label for="cit_exoneracion" class="col-form-label-sm col-sm-4 col-md-3">Cantidad
                         Exoneración</label>
                     <div class="col-sm-8 pl-0 col-md-9">
@@ -78,7 +88,7 @@
 
                 <div class="form-group row mb-1">
                     <div class="col-sm-6">
-                        <button class="btn btn-primary" role="button" (click)='create()'
+                        <button class="btn btn-primary" role="button" (click)='create(programacionSeleccionado.pro_num_turno)'
                             *ngIf="!citaMedica.cit_codigo else elseBlock"
                             [disabled]="!citaMedicaForm.form.valid">Crear</button>
                
