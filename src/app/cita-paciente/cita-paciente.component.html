@@ -1,0 +1,96 @@
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+      <div class="main-body">
+        <div class="page-wrapper">
+  
+          <div class="page-body">
+            <div class="row">
+              <!--start-->
+  
+              <div class="card bg-dark text-white mx-auto" style="width: 50%">
+  
+                <div class="card-header bg-primary">{{titulo}}</div>
+                <div class="card-body">
+  
+                  <form #historiaForm="ngForm" class="container">
+                    <div class="row">
+                        <div class="form-group  col-md-6">
+                            <label for="fechaProgramacion" class="col-form-label-sm">Fecha Programacion</label>
+                            <div class="pl-0">
+                              <!--required-->
+                              <input [(ngModel)]="citaPacienteIn.fechaProgramacion" name="fechaProgramacion" type="date" id="date" >
+                            </div>
+                        </div>
+        
+                          <div class="form-group  col-md-6">
+                            <!--col-sm-2, del total de 12 columnas que exite va ocupar 2-->
+                            <label for="pais" class="col-form-label-sm">Consultorio</label>
+                            <div class="pl-0 mb-0">
+                              <select class="form-control-sm" [(ngModel)]="citaPacienteIn.cod_consultorio" name="consultorio" >
+                                <!--undefined, no esta definido, es como si fuera un null, pero en typescript se maneja como undefined-->
+                                <option [ngValue]="undefined">--- Seleccionar Consultorio ---</option>
+                                <option *ngFor="let consultorio of consultorios" [ngValue]="consultorio.con_codigo">{{consultorio.con_nombre}}</option>
+                              </select>
+        
+                            </div>
+                          </div>
+                    </div>
+                    
+                    <div class="form-group row mb-1">
+                      <div class="col-sm-6">
+
+                        <button class="btn btn-primary" role="button" (click)='buscar()'>Buscar</button>
+                        <button class="btn btn-primary" role="button" (click)='limpiarBusqueda()'>Limpiar</button>
+                      </div>
+                    </div>
+  
+                  </form>
+  
+  
+                </div>
+              </div>
+              <!--end-->
+            </div>
+          </div>
+          
+          <div class="card border-primary">
+
+            <div class="card-body text-primary">
+        
+                <div *ngIf="cita_pacientes?.length==0" class="alert alert-info">
+                  No hay citas para la fecha y consultorio seleccionado!
+                </div>
+                
+                <div class="table-responsive" [ngStyle]="cita_pacientes?.length>0 ? {'display': 'block'} : {'display': 'none'}">
+                  <table datatable  [dtTrigger]="dtTrigger" class="row-border hover" >
+                    <thead >
+                        <tr>
+                            <th>Id</th>
+                            <th>Paciente</th>
+                            <th>Consultorio</th>
+                            <th>Medico</th>
+                            <th>Fecha Cita</th>
+                            <th>Fecha Registro</th>
+                        </tr>
+                    </thead>
+                    <tbody >
+                        <tr *ngFor="let cita_paciente of cita_pacientes">
+                            <td>{{cita_paciente.cit_codigo}}</td>
+                            <td>{{cita_paciente.historia.his_nombre}} {{cita_paciente.historia.his_ape_paterno}} {{cita_paciente.historia.his_ape_materno}}</td>
+                            <td>{{cita_paciente.programacion.consultorio.con_nombre}}</td>
+                            <td>{{cita_paciente.programacion.usuario_medico.personal.per_nombre}}</td>
+                            <td>{{cita_paciente.programacion.pro_fecha}}</td>
+                            <td>{{cita_paciente.cit_fec_registro}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+    
+              </div>
+          
+        </div>
+        </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
