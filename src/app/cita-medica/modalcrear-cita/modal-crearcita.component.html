@@ -68,14 +68,10 @@
                     <div class="col-sm-8 pl-0 col-md-9">
                         <input type="text" class="form-control form-control-sm mb-0"
                             [(ngModel)]="citaMedica.cit_exoneracion" name="cit_exoneracion"
-                            #cit_exoneracion="ngModel" required minlength="1"
+                            #cit_exoneracion="ngModel" minlength="1"
                             pattern="^[0-9]+([.][0-9]+)?$">
                         <div class="alert alert-danger my-1 py-1"
                             *ngIf="cit_exoneracion.invalid && (cit_exoneracion.dirty || cit_exoneracion.touched)">
-                            <div *ngIf="cit_exoneracion.errors.required">
-                                <!--aca se muestra el mensaje de error solo para el Required-->
-                                Cantidad es requerido
-                            </div>
                             <div *ngIf="cit_exoneracion.errors.minlength">
                                 Cantidad debe tener al menos 1 caracteres
                             </div>
@@ -108,5 +104,6 @@
         </div>
       </div>
     </div>
-  
+    
+
   </div>

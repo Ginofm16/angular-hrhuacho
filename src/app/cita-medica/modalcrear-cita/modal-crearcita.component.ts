@@ -32,6 +32,8 @@ export class ModalCrearcitaComponent implements OnInit {
   private editar: boolean=false;
   private testVisible: boolean=true;
 
+  pdfSrc: string;
+
   programacionFilter: ProgramacionFilter = new ProgramacionFilter();
   codigoUsuarioParam : any;
 
@@ -54,6 +56,7 @@ export class ModalCrearcitaComponent implements OnInit {
               private programacionService: ProgramacionService) { }
 
   ngOnInit() {
+
     this.programacionFiltrados = this.myControlProgramacion.valueChanges
       .pipe(
         /*se usara map, porque el valor no es solo el string, sino tambien el objeto producto que 
@@ -94,7 +97,7 @@ export class ModalCrearcitaComponent implements OnInit {
 
 
     if (this.existeItem(nuevoItem.pro_codigo)) {
-      Swal.fire(this.titulo, `Usuario ${nuevoItem.consultorio.con_nombre} ya fue encontrado`, 'info');
+      Swal.fire(this.titulo, `Programación ${nuevoItem.consultorio.con_nombre} ya fue encontrado`, 'info');
     } else {
       console.log('nuevoItemsssss');
       
@@ -126,7 +129,14 @@ export class ModalCrearcitaComponent implements OnInit {
       this.citaMedica.usuario = this.authService.usuario;
       this.citaMedica.historia = this.historia;
       this.citaMedica.cit_estado = true;
-      this.citaMedica.cit_costo_total = this.citaMedica.programacion.consultorio.con_precio - this.citaMedica.cit_exoneracion;
+      console.log(":::::cit_exoneracion:::::");
+      console.log(this.citaMedica.cit_exoneracion);
+      if(this.citaMedica.cit_exoneracion != null){
+        this.citaMedica.cit_costo_total = this.citaMedica.programacion.consultorio.con_precio - this.citaMedica.cit_exoneracion;
+      }else{
+        this.citaMedica.cit_costo_total = this.citaMedica.programacion.consultorio.con_precio;
+      }
+      
       this.citaMedicaService.create(this.citaMedica)
       .subscribe(json => {
 
@@ -134,6 +144,7 @@ export class ModalCrearcitaComponent implements OnInit {
 
         Swal.fire('Nueva CitaMedica',`La citaMedica número: ${json.citaPaciente.cit_codigo} para: ${json.citaPaciente.historia.his_nombre}
         ha sido creado con exito`,'success');
+        this.descargarReporte();
         
       },
         err =>{
@@ -145,6 +156,7 @@ export class ModalCrearcitaComponent implements OnInit {
       this.cerrarModal();
       console.log('pre navigate');
       this.router.navigate(['/cuerpo']);
+      
     }
     
   }
@@ -156,9 +168,39 @@ export class ModalCrearcitaComponent implements OnInit {
   }
 
   cerrarModal(){
+    
     this.modalCrearcitaService.cerrarModal();
     this.programacionSeleccionado = null;
     this.myControlProgramacion.reset();
+  }
+
+  generarReporte(){
+    console.log(":::::::generarReporte::::::::::");
+    this.citaMedicaService.generarReporte().subscribe(data => {
+      let reader = new FileReader();
+      //onload, lee el arreglo de byte y lo expresa como una url que lo almaceno en pdfSrc
+      reader.onload = (e: any) => {
+        this.pdfSrc = e.target.result;
+        console.log(this.pdfSrc);
+      }
+      //finalmente todo es pasado como un buffer para que pueda ser leido
+      reader.readAsArrayBuffer(data);
+
+    });
+  }
+
+  descargarReporte(){
+    this.citaMedicaService.generarReporte().subscribe(data =>{
+      //generar un url del arreglo de byte
+      const url = window.URL.createObjectURL(data);
+      //console.log(url);
+      const a = document.createElement('a');
+      a.setAttribute('style', 'display:none');
+      document.body.appendChild(a);
+      a.href = url;
+      a.download = 'archivo.pdf';
+      a.click();
+    });
   }
 
 }

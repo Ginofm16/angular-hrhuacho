@@ -18,6 +18,7 @@ import localeES from '@angular/common/locales/es';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDatepickerModule, MatButtonModule, MatRadioModule } from '@angular/material';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
@@ -53,6 +54,7 @@ import { ModalCrearcitaComponent } from './cita-medica/modalcrear-cita/modal-cre
 import { PersonalComponent } from './personal/mantenimiento/personal.component';
 import { FormulariopersonalComponent } from './personal/mantenimiento/formulario/formulariopersonal.component';
 import { RegistroComponent } from './personal/registro/registro.component';
+import { CitaPacienteComponent } from './cita-paciente/cita-paciente.component';
 
 registerLocaleData(localeES, 'es');
 
@@ -77,7 +79,7 @@ const routes: Routes = [
   {path:'personal/formulario', component: FormulariopersonalComponent},
   {path:'personal/formulario/:codigo', component: FormulariopersonalComponent},
   {path:'registro', component:RegistroComponent},
-
+  {path:'cita-paciente', component:CitaPacienteComponent}
 ]
 
 @NgModule({
@@ -102,7 +104,8 @@ const routes: Routes = [
     ModalCrearcitaComponent,
     PersonalComponent,
     FormulariopersonalComponent,
-    RegistroComponent
+    RegistroComponent,
+    CitaPacienteComponent
   ],
   imports: [
     BrowserModule,
@@ -114,7 +117,8 @@ const routes: Routes = [
     MatRadioModule,
     ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatAutocompleteModule, MatSelectModule,
     FullCalendarModule,
-    DataTablesModule
+    DataTablesModule,
+    PdfViewerModule
   ],
   providers: [HistoriaService, CuerpoService,CalendarService, {provide: LOCALE_ID, useValue:'es'},
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },

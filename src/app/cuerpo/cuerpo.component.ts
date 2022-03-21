@@ -1,3 +1,4 @@
+import { CitaMedicaService } from './../cita-medica/service/cita-medica.service';
 import { ModalCrearcitaService } from './service/modal-crearcita.service';
 import { Component, OnInit } from '@angular/core';
 import { Historia } from '../historia/historia';
@@ -21,7 +22,8 @@ import { ModalService } from '../historia/detalle/modal.service';
 })
 export class CuerpoComponent implements OnInit {
 
-  titulo: string = 'Nueva Factura';
+  titulo: string = 'Nuevo Paciente';
+  titulo_paciente: string = 'Paciente';
   cuerpo: Cuerpo = new Cuerpo();
   historiaComp: HistoriasComponent;
   historia: Historia = new Historia();
@@ -36,12 +38,14 @@ export class CuerpoComponent implements OnInit {
               private router: Router,
               private modalService: ModalService,
               private modalCrearcitaService: ModalCrearcitaService,
-              private activatedRoute: ActivatedRoute) {
-                console.log('::::constructor:::');
+              private activatedRoute: ActivatedRoute,
+              private serviceCitaMedica: CitaMedicaService) {
+                console.log('::::constructor CuerpoComponent:::');
+    
                }
 
   ngOnInit() {
-    console.log('::::ngOnInit:::');
+    console.log('::::ngOnInit CuerpoComponent:::');
     this.cuerpo.items = [];
 
     this.historiasFiltradas = this.autocompleteControl.valueChanges
@@ -58,6 +62,7 @@ export class CuerpoComponent implements OnInit {
       this.modalCrearcitaService.notificarRegistro.subscribe(citaMedica => {
         this.cuerpo.items = [];
       })
+
   }
 
   private _filter(value: string): Observable<Historia[]> {
@@ -78,7 +83,7 @@ export class CuerpoComponent implements OnInit {
      nuevoItem = event.option.value as Historia;
 
     if (this.existeItem(nuevoItem.his_codigo)) {
-      Swal.fire(this.titulo, `Usuario ${nuevoItem.his_ape_paterno} ya fue encontrado`, 'info');
+      Swal.fire(this.titulo_paciente, `Usuario ${nuevoItem.his_ape_paterno} ya fue encontrado`, 'info');
     } else {
       console.log('nuevoItemsssss');
       
@@ -123,6 +128,20 @@ export class CuerpoComponent implements OnInit {
     
     this.historiaSeleccionadaCrearCita = historia;
     this.modalCrearcitaService.abrirModal();
+  }
+
+  descargarReporte(){
+    this.serviceCitaMedica.generarReporte().subscribe(data =>{
+      //generar un url del arreglo de byte
+      const url = window.URL.createObjectURL(data);
+      //console.log(url);
+      const a = document.createElement('a');
+      a.setAttribute('style', 'display:none');
+      document.body.appendChild(a);
+      a.href = url;
+      a.download = 'archivo.pdf';
+      a.click();
+    });
   }
 
 }

@@ -9,6 +9,8 @@ import { catchError, map } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { environment } from 'src/environments/environment';
 
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -16,6 +18,7 @@ export class CitaMedicaService {
 
   citaMedicas: CitaMedica[];
   codCitaMedica: String;
+  
 
   citaMedicaCambio = new Subject<CitaMedica[]>();
   private urlEndPoint: string = `${environment.HOST}/api/citaPaciente`;
@@ -113,6 +116,11 @@ export class CitaMedicaService {
       })
     )
   }
-
   
+  generarReporte(){
+    return this.http.get(`${environment.HOST}/api/generar-reporte`, {
+      responseType: 'blob'
+    });
+  }
+
 }
