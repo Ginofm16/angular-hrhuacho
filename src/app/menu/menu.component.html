@@ -53,22 +53,17 @@
       <i class="fas fa-fw fa-table"></i>
       <span>Paciente citados</span>
     </a>
-
-    <a class="nav-link" href="#">
-      <i class="fas fa-fw fa-table"></i>
-      <span>Diagnóstico</span>
-    </a>
-
+    <br>
     <a class="nav-link pt-0" routerLink="/programacion">
       <i class="fas fa-fw fa-table"></i>
       <span>Programación</span>
     </a>
   </li>
-
-  <!-- Divider -->
+<!-- **
+  !- Divider --
   <hr class="sidebar-divider" *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_ENFERMERO') || authService.hasRole('ROLE_MEDICO')">
 
-  <!-- Heading -->
+  !-- Heading --
   <div class="sidebar-heading" *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_INFORMATICO')">
     CONTROL DE HISTORIA
   </div>
@@ -77,7 +72,7 @@
       <i class="fas fa-fw fa-table"></i>
       <span>Historia</span>
     </a>
-  </li>
+  </li> **-->
 
   <!-- Divider -->
   <hr class="sidebar-divider mt-2" *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_INFORMATICO')">
@@ -133,7 +128,7 @@
     </div>
   </li>
 
-  <li class="nav-item" *ngIf="authService.hasRole('ROLE_ADMIN')">
+  <li class="nav-item" *ngIf="authService.hasRole('ROLE_ADMIN')" style="display:none;">
     <a class="nav-link collapsed pb-0" href="#" data-toggle="collapse" data-target="#collapsePages4" aria-expanded="true"
       aria-controls="collapsePages4">
       <i class="fas fa-fw fa-folder"></i>
@@ -151,9 +146,10 @@
   <!-- Divider -->
   <hr class="sidebar-divider d-none d-md-block" *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_INFORMATICO')">
 
-  <!-- Sidebar Toggler (Sidebar) -->
+  <!-- Sidebar Toggler (Sidebar) --
   <div class="text-center d-none d-md-inline">
     <button class="rounded-circle border-0" id="sidebarToggle"></button>
   </div>
+  -->
 
 </ul>
